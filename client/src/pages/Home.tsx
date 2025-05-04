@@ -151,7 +151,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white main-container">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
@@ -163,7 +163,18 @@ export default function Home() {
                 className="data-[state=checked]:bg-primary"
                 onCheckedChange={(checked) => {
                   // Dark mode is already active by default
+                  document.documentElement.classList.toggle('light-mode', !checked);
                   document.body.classList.toggle('light-mode', !checked);
+                  
+                  if (!checked) {
+                    // Force the background for light mode
+                    document.body.style.background = "linear-gradient(135deg, #ffffff, #f0f9ff, #e6f7ff)";
+                    document.querySelector('.main-container').setAttribute('style', 'background: none !important');
+                  } else {
+                    // Reset for dark mode
+                    document.body.style.background = "";
+                    document.querySelector('.main-container').setAttribute('style', '');
+                  }
                 }}
                 defaultChecked={true}
               />

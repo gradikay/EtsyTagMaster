@@ -337,8 +337,12 @@
 
 /* Light mode styles */
 body.light-mode {
-  background: linear-gradient(135deg, #ffffff, #f0f9ff, #e6f7ff);
+  background: linear-gradient(135deg, #ffffff, #f0f9ff, #e6f7ff) !important;
   color: #1a202c;
+}
+
+body.light-mode .main-container {
+  background: none !important;
 }
 
 body.light-mode .glass-effect {
