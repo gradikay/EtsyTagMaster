@@ -335,6 +335,55 @@
   color: white;
 }
 
+/* Light mode styles */
+body.light-mode {
+  background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+  color: #1e293b;
+}
+
+body.light-mode .glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+body.light-mode h1 {
+  color: #1e293b;
+}
+
+body.light-mode .bg-slate-900\/40 {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+body.light-mode .bg-slate-800\/70,
+body.light-mode .bg-slate-700,
+body.light-mode .bg-slate-700\/30 {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e293b;
+  border-color: rgba(148, 163, 184, 0.5);
+}
+
+body.light-mode .text-white,
+body.light-mode .text-slate-300,
+body.light-mode .text-slate-400 {
+  color: #334155;
+}
+
+body.light-mode .border-slate-700,
+body.light-mode .border-slate-600 {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+body.light-mode .copy-tag-badge {
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #334155;
+}
+
+body.light-mode .copy-tag-badge:hover {
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+}
+
 /* Ultra small mobile screens */
 @media (max-width: 375px) {
   h1 {

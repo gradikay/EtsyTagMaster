@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Sparkles, RefreshCcw, Link as LinkIcon, Copy } from "lucide-react";
+import { Sparkles, RefreshCcw, Link as LinkIcon, Copy, Moon, Sun } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation } from "wouter";
 
@@ -152,13 +154,31 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
         {/* Header - More responsive text sizing */}
-        <header className="text-center mb-8 sm:mb-12 animate-fade-in">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
-            Etsy SEO Tag Generator
-          </h1>
-          <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto px-2">
-            Create optimal tags for your Etsy listings and boost your shop's visibility
-          </p>
+        <header className="relative mb-8 sm:mb-12 animate-fade-in">
+          <div className="absolute top-0 right-2 flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <Sun className="h-3 w-3 text-slate-400" />
+              <Switch 
+                id="dark-mode" 
+                className="data-[state=checked]:bg-primary"
+                onCheckedChange={(checked) => {
+                  // Dark mode is already active by default
+                  document.body.classList.toggle('light-mode', !checked);
+                }}
+                defaultChecked={true}
+              />
+              <Moon className="h-3 w-3 text-slate-300" />
+            </div>
+          </div>
+          
+          <div className="text-center pt-8 sm:pt-2">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
+              Etsy SEO Tag Generator
+            </h1>
+            <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto px-2">
+              Create optimal tags for your Etsy listings and boost your shop's visibility
+            </p>
+          </div>
         </header>
 
         {/* Mobile-first grid system with order changes on larger screens */}
