@@ -204,7 +204,7 @@ export default function Home() {
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-slate-800 border-slate-600 text-base">
+                            <SelectContent className="bg-slate-700 border-slate-600 text-white text-base">
                               <SelectItem value="jewelry">Jewelry</SelectItem>
                               <SelectItem value="clothing">Clothing</SelectItem>
                               <SelectItem value="home_decor">Home Decor</SelectItem>

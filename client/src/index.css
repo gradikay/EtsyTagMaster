@@ -277,3 +277,15 @@
 .tag-container::-webkit-scrollbar-thumb:hover {
   background: rgba(99, 102, 241, 0.6);
 }
+
+/* Style the dropdown item highlight color */
+[data-radix-select-item][data-highlighted],
+[data-radix-select-item][data-state="checked"] {
+  background-color: #6366f1 !important;
+  color: white !important;
+}
+
+/* Select items in dropdown */
+.SelectItem {
+  color: white;
+}
