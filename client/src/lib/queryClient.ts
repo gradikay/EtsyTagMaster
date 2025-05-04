@@ -7,6 +7,30 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+// Helper function to determine if we're in a production environment
+const isProduction = (): boolean => {
+  return window.location.hostname !== 'localhost' && 
+         window.location.hostname !== '127.0.0.1';
+};
+
+// Function to get the correct API URL based on environment
+const getApiUrl = (url: string): string => {
+  // If it's already a full URL, return it as is
+  if (url.startsWith('http')) {
+    return url;
+  }
+  
+  // For API endpoints, route to Netlify Functions in production
+  if (url.startsWith('/api/')) {
+    return isProduction() 
+      ? `/.netlify/functions/api${url.replace('/api', '')}`
+      : url;
+  }
+  
+  // Default case - return URL as is
+  return url;
+};
+
 export async function apiRequest<T = any>({
   method,
   url,
@@ -16,7 +40,10 @@ export async function apiRequest<T = any>({
   url: string;
   body?: unknown | undefined;
 }): Promise<T> {
-  const res = await fetch(url, {
+  // Get the correct API URL based on environment
+  const apiUrl = getApiUrl(url);
+  
+  const res = await fetch(apiUrl, {
     method,
     headers: body ? { "Content-Type": "application/json" } : {},
     body: body ? JSON.stringify(body) : undefined,
@@ -33,7 +60,10 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    // Get the correct API URL based on environment
+    const apiUrl = getApiUrl(queryKey[0] as string);
+    
+    const res = await fetch(apiUrl, {
       credentials: "include",
     });
 

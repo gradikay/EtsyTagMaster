@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist"
+  publish = "dist/public"
   functions = "netlify/functions"
 
 # Handle SPA routing by redirecting all paths to index.html
@@ -19,7 +19,7 @@
   command = "npm run dev"
   port = 8888
   targetPort = 5000
-  publish = "dist"
+  publish = "dist/public"
   autoLaunch = true
 
 [functions]

@@ -31,6 +31,21 @@ A powerful, modern web application designed to help Etsy sellers optimize their 
 
 You can try the application here: [Etsy SEO Tag Generator](https://etsy-tag-generator.replit.app)
 
+## 🚀 Deployment
+
+### Netlify Deployment
+
+This application is configured for easy deployment on Netlify:
+
+1. Fork or clone this repository to your own GitHub account
+2. Log in to [Netlify](https://netlify.com)
+3. Click "New site from Git"
+4. Select your repository
+5. Netlify will automatically detect the build settings from netlify.toml
+6. Click "Deploy site"
+
+The application uses Netlify Functions to handle the backend API, so there's no need for additional server setup.
+
 ## 💻 Technology Stack
 
 - **Frontend**:
