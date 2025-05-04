@@ -9,6 +9,7 @@ const generateTagsSchema = z.object({
   category: z.string().optional(),
   style: z.string().optional(),
   maxTags: z.number().min(1).max(300).optional().default(13),
+  maxWordsPerTag: z.number().min(1).max(5).optional().default(3),
 });
 
 // Helper function to generate SEO tags based on description
@@ -195,8 +196,15 @@ function generateTags(description: string, category?: string, style?: string): s
   // Deduplicate and clean tags, returning ALL possible matches from the description
   const uniqueTagsSet = new Set(allTags);
   const uniqueTags = Array.from(uniqueTagsSet)
-    // Remove any special characters except spaces (for multi-word tags)
-    .map(tag => tag.replace(/[^\w\s]/g, '').trim())
+    // Properly handle special characters - replace with spaces then clean up
+    .map(tag => {
+      // Replace special characters with spaces to avoid merging words
+      // for example "Nordic/Irish" becomes "Nordic Irish"
+      const spacedTag = tag.replace(/[^\w\s]/g, ' ').trim();
+      
+      // Remove any extra spaces that might have been created
+      return spacedTag.replace(/\s+/g, ' ');
+    })
     // Ensure tags are reasonable length and not empty
     .filter(tag => tag.length > 0 && tag.length <= 80)
     // Filter duplicates that might have been created during special char removal
@@ -219,13 +227,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Tag generation endpoint
   app.post("/api/generate-tags", async (req, res) => {
     try {
-      const { description, category, style, maxTags } = generateTagsSchema.parse(req.body);
+      const { description, category, style, maxTags, maxWordsPerTag } = generateTagsSchema.parse(req.body);
       
       // Generate tags based on input
       const allGeneratedTags = generateTags(description, category, style);
       
+      // Filter by maximum words per tag if specified
+      const filteredByWordCount = allGeneratedTags.filter(tag => {
+        const wordCount = tag.split(' ').length;
+        return wordCount <= maxWordsPerTag;
+      });
+      
       // Limit to the requested number of tags (default is 13)
-      const tags = allGeneratedTags.slice(0, maxTags);
+      const tags = filteredByWordCount.slice(0, maxTags);
       
       // Calculate a more accurate relevance score based on several factors
       // - Number of tags generated (unlimited)
@@ -255,7 +269,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         tags,
         relevanceScore,
-        totalAvailableTags: allGeneratedTags.length
+        totalAvailableTags: allGeneratedTags.length,
+        totalFilteredTags: filteredByWordCount.length
       });
     } catch (error) {
       if (error instanceof z.ZodError) {

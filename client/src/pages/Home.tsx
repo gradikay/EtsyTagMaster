@@ -20,12 +20,14 @@ interface GenerateTagsRequest {
   category: string;
   style?: string;
   maxTags?: number;
+  maxWordsPerTag?: number;
 }
 
 interface GenerateTagsResponse {
   tags: string[];
   relevanceScore: number;
   totalAvailableTags: number;
+  totalFilteredTags: number;
 }
 
 const formSchema = z.object({
@@ -33,6 +35,7 @@ const formSchema = z.object({
   category: z.string().min(1, "Please select a category"),
   style: z.string().optional(),
   maxTags: z.number().min(1).max(200).default(13),
+  maxWordsPerTag: z.number().min(1).max(5).default(3),
 });
 
 export default function Home() {
@@ -48,6 +51,7 @@ export default function Home() {
       category: "",
       style: "",
       maxTags: 13,
+      maxWordsPerTag: 3,
     },
   });
   
@@ -223,32 +227,61 @@ export default function Home() {
                     />
                   </div>
                   
-                  <FormField
-                    control={form.control}
-                    name="maxTags"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex justify-between items-center">
-                          <FormLabel className="text-sm sm:text-base">Number of Tags (Default: 13)</FormLabel>
-                          <span className="text-sm text-slate-300">{field.value} tags</span>
-                        </div>
-                        <FormControl>
-                          <Slider 
-                            defaultValue={[field.value]} 
-                            max={100} 
-                            min={1} 
-                            step={1}
-                            onValueChange={(vals: number[]) => field.onChange(vals[0])}
-                            className="py-4"
-                          />
-                        </FormControl>
-                        <FormDescription className="text-xs text-slate-400">
-                          Etsy allows up to 13 tags per listing, but you can generate more to choose from
-                        </FormDescription>
-                        <FormMessage className="text-sm" />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <FormField
+                      control={form.control}
+                      name="maxTags"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex justify-between items-center">
+                            <FormLabel className="text-sm sm:text-base">Number of Tags (Default: 13)</FormLabel>
+                            <span className="text-sm text-slate-300">{field.value} tags</span>
+                          </div>
+                          <FormControl>
+                            <Slider 
+                              defaultValue={[field.value]} 
+                              max={100} 
+                              min={1} 
+                              step={1}
+                              onValueChange={(vals: number[]) => field.onChange(vals[0])}
+                              className="py-4"
+                            />
+                          </FormControl>
+                          <FormDescription className="text-xs text-slate-400">
+                            Etsy allows up to 13 tags per listing, but you can generate more to choose from
+                          </FormDescription>
+                          <FormMessage className="text-sm" />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="maxWordsPerTag"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex justify-between items-center">
+                            <FormLabel className="text-sm sm:text-base">Max Words Per Tag</FormLabel>
+                            <span className="text-sm text-slate-300">{field.value} {field.value === 1 ? 'word' : 'words'}</span>
+                          </div>
+                          <FormControl>
+                            <Slider 
+                              defaultValue={[field.value]} 
+                              max={5} 
+                              min={1} 
+                              step={1}
+                              onValueChange={(vals: number[]) => field.onChange(vals[0])}
+                              className="py-4"
+                            />
+                          </FormControl>
+                          <FormDescription className="text-xs text-slate-400">
+                            Limit tag length - choose 1 for single words, up to 5 for longer phrases
+                          </FormDescription>
+                          <FormMessage className="text-sm" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
                   <div className="flex justify-center pt-2">
                     <Button 
@@ -412,9 +445,9 @@ export default function Home() {
                     <p className="text-sm text-slate-400">
                       <span className="font-medium text-primary-foreground">Showing {tags.length} tags</span> from your description. Etsy allows a maximum of 13 tags per listing.
                     </p>
-                    {generateTagsMutation.data?.totalAvailableTags > tags.length && (
+                    {generateTagsMutation.data && generateTagsMutation.data.totalAvailableTags > tags.length && (
                       <p className="text-xs text-amber-400 mt-1">
-                        <span className="font-medium">Info:</span> {generateTagsMutation.data?.totalAvailableTags - tags.length} more tags available. Adjust the slider to see more options.
+                        <span className="font-medium">Info:</span> {generateTagsMutation.data.totalAvailableTags - tags.length} more tags available. Adjust the slider to see more options.
                       </p>
                     )}
                     {tags.length > 13 && (
