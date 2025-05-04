@@ -20,7 +20,7 @@ function generateTags(description: string, category?: string, style?: string): s
   const phrases = [];
   
   // Extract single words (excluding common words)
-  const commonWords = ['a', 'the', 'and', 'or', 'but', 'for', 'with', 'in', 'on', 'at', 'to', 'of'];
+  const commonWords = ['a', 'the', 'and', 'or', 'but', 'for', 'with', 'in', 'on', 'at', 'to', 'of', 'is', 'are', 'was', 'were', 'be', 'this', 'that', 'these', 'those', 'it', 'they', 'them', 'their', 'there', 'here', 'when', 'where', 'why', 'how', 'which', 'who', 'whom'];
   const singleWords = words.filter(word => !commonWords.includes(word) && word.length > 3);
   
   // Extract phrases (2-3 words)
@@ -36,34 +36,86 @@ function generateTags(description: string, category?: string, style?: string): s
   // Combine all potential keywords
   let potentialTags = [...singleWords, ...phrases];
   
-  // Add category and style if provided
-  if (category) {
+  // Add category-specific tags
+  const categoryTags: Record<string, string[]> = {
+    jewelry: ['handmade jewelry', 'custom jewelry', 'unique jewelry', 'jewelry gift', 'statement piece'],
+    clothing: ['handmade clothing', 'custom apparel', 'unique clothing', 'fashion gift', 'boutique clothing'],
+    home_decor: ['home decor', 'handmade decor', 'custom home gift', 'interior design', 'home accent'],
+    art: ['original art', 'handmade art', 'wall art', 'custom artwork', 'unique art'],
+    accessories: ['handmade accessories', 'custom accessories', 'fashion accessory', 'unique accessory'],
+    craft_supplies: ['craft supplies', 'crafting materials', 'art supplies', 'diy materials', 'crafting tools'],
+    toys_games: ['handmade toys', 'custom game', 'unique toy', 'kids gift', 'educational toy'],
+    vintage: ['vintage item', 'retro find', 'antique gift', 'collectible', 'nostalgic gift']
+  };
+  
+  // Add category and category-specific tags if provided
+  if (category && categoryTags[category]) {
     potentialTags.push(category);
     potentialTags.push(`${category} gift`);
+    // Add all category-specific tags
+    potentialTags = [...potentialTags, ...categoryTags[category]];
   }
   
+  // Add style-related tags if provided
   if (style) {
     potentialTags.push(style);
-    potentialTags.push(`${style} ${category || ''}`);
+    potentialTags.push(`${style} ${category || 'item'}`);
+    potentialTags.push(`${style} design`);
+    potentialTags.push(`${style} style`);
   }
   
-  // Add some common Etsy-specific tags
-  potentialTags.push('handmade');
-  potentialTags.push('custom gift');
-  potentialTags.push('personalized');
+  // Add material-related tags if detected in description
+  const materials = ['wood', 'wooden', 'metal', 'ceramic', 'glass', 'cotton', 'linen', 'silk', 'leather', 'paper', 'plastic', 'stone', 'silver', 'gold', 'brass', 'copper', 'steel', 'bronze', 'iron', 'clay', 'porcelain', 'fabric', 'wool', 'acrylic', 'resin'];
   
+  for (const material of materials) {
+    if (lowerDesc.includes(material)) {
+      potentialTags.push(material);
+      potentialTags.push(`${material} ${category || 'item'}`);
+      potentialTags.push(`${material} gift`);
+      break; // Only add one material to avoid tag redundancy
+    }
+  }
+  
+  // Add occasion-related tags if detected in description
+  const occasions = ['wedding', 'birthday', 'anniversary', 'christmas', 'holiday', 'halloween', 'thanksgiving', 'easter', 'mothers day', 'fathers day', 'valentines', 'graduation', 'baby shower', 'retirement', 'housewarming'];
+  
+  for (const occasion of occasions) {
+    if (lowerDesc.includes(occasion) || lowerDesc.includes(occasion.replace(' ', ''))) {
+      potentialTags.push(`${occasion} gift`);
+      potentialTags.push(`${occasion} present`);
+      break; // Only add one occasion to avoid tag redundancy
+    }
+  }
+  
+  // Add common high-performing Etsy tags
+  const commonTags = [
+    'handmade',
+    'custom gift',
+    'personalized',
+    'unique gift',
+    'gift idea',
+    'one of a kind',
+    'handcrafted',
+    'made to order'
+  ];
+  
+  // Add gift-related tags if "gift" is mentioned
   if (lowerDesc.includes('gift')) {
     potentialTags.push('gift for her');
     potentialTags.push('gift for him');
-    potentialTags.push('unique gift');
-    potentialTags.push('birthday gift');
-    potentialTags.push('anniversary gift');
+    potentialTags.push('special gift');
+    potentialTags.push('thoughtful gift');
+    potentialTags.push('perfect gift');
   }
   
-  // Deduplicate and get max 20 tags
-  const uniqueTags = [...new Set(potentialTags)]
+  // Combine all tags
+  const allTags = [...potentialTags, ...commonTags];
+  
+  // Deduplicate, filter by length, and get exactly 13 tags if possible (Etsy max)
+  const uniqueTagsSet = new Set(allTags);
+  const uniqueTags = Array.from(uniqueTagsSet)
     .filter(tag => tag.length > 0 && tag.length <= 20) // Etsy tag length limit
-    .slice(0, 20);
+    .slice(0, 13); // Etsy allows maximum 13 tags
   
   return uniqueTags;
 }
@@ -77,8 +129,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate tags based on input
       const tags = generateTags(description, category, style);
       
-      // Calculate a "relevance score" (this is just for demo purposes)
-      const relevanceScore = Math.min(Math.floor(description.length / 5) + 50, 98);
+      // Calculate a more accurate relevance score based on several factors
+      // - Number of tags generated (max 13)
+      // - Presence of category-specific tags
+      // - Presence of specific keywords from the description
+      // - Variety of tag types (single words, phrases, etc.)
+      const tagCount = tags.length;
+      const tagLengths = tags.map(tag => tag.split(' ').length);
+      const tagVariety = Array.from(new Set(tagLengths)).length;
+      const categoryMatches = category ? tags.filter(tag => tag.includes(category)).length : 0;
+      
+      // Extract words from description for keyword matching
+      const descWords = description.toLowerCase().split(/\s+/);
+      const keywordMatches = descWords.filter((word: string) => word.length > 4 && tags.some(tag => tag.includes(word))).length;
+      
+      // Calculate score based on these factors (weighted)
+      const relevanceScore = Math.min(
+        Math.round(
+          (tagCount / 13) * 40 +         // 40% weight for tag count
+          (tagVariety / 3) * 20 +        // 20% weight for variety of tag types
+          (categoryMatches / 5) * 20 +   // 20% weight for category relevance
+          (keywordMatches / 10) * 20     // 20% weight for keyword matching
+        ), 
+        99                               // Max score is 99
+      );
       
       res.json({
         tags,
