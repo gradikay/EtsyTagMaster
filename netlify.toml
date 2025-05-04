@@ -1,19 +1,19 @@
 [build]
-  command = "npm run build"
+  command = "vite build"
   publish = "dist/public"
   functions = "netlify/functions"
 
 # Production context
 [context.production]
-  command = "npm run build"
+  command = "vite build"
 
 # Deploy Preview context
 [context.deploy-preview]
-  command = "npm run build"
+  command = "vite build"
 
 # Branch Deploy context
 [context.branch-deploy]
-  command = "npm run build"
+  command = "vite build"
 
 # Redirect all routes to index.html for SPA
 [[redirects]]
@@ -38,3 +38,7 @@
 # Serverless function bundler
 [functions]
   node_bundler = "esbuild"
+
+# Custom build plugin
+[[plugins]]
+  package = "/netlify/build-plugins/vite-build.js"
