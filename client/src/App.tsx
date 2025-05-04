@@ -21,6 +21,40 @@ function Router() {
 function AnimatedBackground() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   
+  // Create animated hexagons
+  useEffect(() => {
+    // Create and add animated hexagons
+    const hexContainer = document.createElement('div');
+    hexContainer.className = 'animated-hexagons';
+    
+    // Create 20 animated hexagons
+    for (let i = 0; i < 20; i++) {
+      const hexagon = document.createElement('div');
+      
+      // Random starting positions
+      hexagon.style.left = `${Math.random() * 100}%`;
+      hexagon.style.top = `${Math.random() * 100}%`;
+      
+      // Random animation delay
+      hexagon.style.animationDelay = `${Math.random() * 5}s`;
+      
+      hexContainer.appendChild(hexagon);
+    }
+    
+    // Add to the background
+    const backgroundEl = document.querySelector('.animated-background');
+    if (backgroundEl) {
+      backgroundEl.appendChild(hexContainer);
+    }
+    
+    // Cleanup
+    return () => {
+      if (backgroundEl && backgroundEl.contains(hexContainer)) {
+        backgroundEl.removeChild(hexContainer);
+      }
+    };
+  }, []);
+  
   // Listen for changes to the light/dark mode
   useEffect(() => {
     const checkTheme = () => {
@@ -53,6 +87,7 @@ function AnimatedBackground() {
       ) : (
         <div className="light-anim"></div>
       )}
+      {/* Hexagons will be added via useEffect */}
     </div>
   );
 }

@@ -335,7 +335,7 @@
   color: white;
 }
 
-/* Animated Background Styles */
+/* Animated Background Styles - Futuristic Polygons */
 .animated-background {
   position: fixed;
   top: 0;
@@ -346,89 +346,199 @@
   overflow: hidden;
 }
 
-/* Dark mode animation - stars and gradients */
+/* High-tech dark mode animation with cyberpunk grid and particles */
 .stars {
-  background: linear-gradient(125deg, #020024 0%, #090979 35%, #00396b 70%, #002046 100%);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -2;
-  animation: gradientShift 15s ease infinite;
-  background-size: 400% 400%;
+  background: #0f172a;
+  background: radial-gradient(circle, rgba(30,41,59,1) 0%, rgba(15,23,42,1) 70%, rgba(2,6,23,1) 100%);
+  overflow: hidden;
 }
 
-.stars::before,
+.stars::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  z-index: -1;
+  background-image: 
+    linear-gradient(transparent 0%, rgba(99, 102, 241, 0.1) 2%, transparent 2.5%, transparent 97.5%, rgba(99, 102, 241, 0.1) 100%),
+    linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.1) 2%, transparent 2.5%, transparent 97.5%, rgba(99, 102, 241, 0.1) 100%);
+  background-size: 50px 50px;
+  animation: moveGrid 20s linear infinite;
+}
+
 .stars::after {
   content: "";
   position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background-image: 
+    radial-gradient(rgba(99, 102, 241, 0.5), transparent 1px),
+    radial-gradient(rgba(192, 132, 252, 0.5), transparent 1px),
+    radial-gradient(rgba(99, 102, 241, 0.5), transparent 1px),
+    radial-gradient(rgba(192, 132, 252, 0.5), transparent 1px);
+  background-size: 300px 300px, 200px 200px, 150px 150px, 100px 100px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  animation: sparkle 6s linear infinite;
+}
+
+@keyframes moveGrid {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(1deg) scale(1.05);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(1deg);
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Hexagon Pattern Animation for both modes */
+.animated-hexagons {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    radial-gradient(white, rgba(255,255,255,0) 2px),
-    radial-gradient(white, rgba(255,255,255,0) 1px);
-  background-size: 50px 50px, 30px 30px;
-  background-position: 0 0, 25px 25px;
-  opacity: 0;
-  animation: twinkle 5s ease-in-out infinite alternate;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0.4;
 }
 
-.stars::after {
-  background-size: 100px 100px, 50px 50px;
-  background-position: 10px 50px, 15px 30px;
-  animation-delay: 2.5s;
+.animated-hexagons div {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: 2px solid rgba(99, 102, 241, 0.4);
+  animation: movehex 10s linear infinite;
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.35; }
+.animated-hexagons div:nth-child(even) {
+  border-color: rgba(139, 92, 246, 0.3);
+  width: 20px;
+  height: 20px;
+  animation-duration: 15s;
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.animated-hexagons div:nth-child(3n) {
+  border-color: rgba(192, 132, 252, 0.2);
+  width: 30px;
+  height: 30px;
+  animation-duration: 20s;
 }
 
-/* Light mode animation - soft flowing gradients */
+@keyframes movehex {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+    border-radius: 0;
+  }
+  10% {
+    opacity: 1;
+    border-radius: 50%;
+  }
+  90% {
+    opacity: 1;
+    border-radius: 50%;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+/* Cool light mode animation - holographic waves */
 .light-anim {
-  background: linear-gradient(-45deg, #f0f9ff 0%, #e1eeff 25%, #ddf4ff 50%, #e6f7ff 75%, #f5fcff 100%);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -2;
-  background-size: 400% 400%;
-  animation: lightShift 20s ease infinite;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+  overflow: hidden;
 }
 
 .light-anim::before {
   content: "";
   position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  background-image: 
+    linear-gradient(45deg, rgba(147, 197, 253, 0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(147, 197, 253, 0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(147, 197, 253, 0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(147, 197, 253, 0.1) 75%);
+  background-size: 100px 100px;
+  animation: lightGridMove 20s linear infinite;
+}
+
+.light-anim::after {
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(173, 216, 230, 0.3) 0%, rgba(173, 216, 230, 0) 70%),
-    radial-gradient(circle at 80% 70%, rgba(135, 206, 250, 0.3) 0%, rgba(135, 206, 250, 0) 70%);
-  animation: floatingBubbles 15s ease-in-out infinite alternate;
+    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 50%),
+    radial-gradient(circle at 70% 65%, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 50%),
+    radial-gradient(circle at 40% 70%, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0) 45%),
+    radial-gradient(circle at 80% 20%, rgba(192, 132, 252, 0.15) 0%, rgba(192, 132, 252, 0) 40%);
+  background-blend-mode: screen;
+  animation: pulseGlow 8s ease-in-out infinite;
 }
 
-@keyframes lightShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes lightGridMove {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(3deg) scale(1.1);
+  }
 }
 
-@keyframes floatingBubbles {
-  0% { opacity: 0.5; transform: translateY(0) scale(1); }
-  50% { opacity: 0.7; transform: translateY(-10px) scale(1.05); }
-  100% { opacity: 0.5; transform: translateY(0) scale(1); }
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 /* Light mode styles */
