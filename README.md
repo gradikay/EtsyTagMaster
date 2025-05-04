@@ -82,6 +82,16 @@ The application can be configured through the following environment variables:
 
 - `PORT`: The port on which the server runs (default: 5000)
 
+## 🎨 Customization
+
+For detailed instructions on how to customize the colors and text of this application, see the [Customization Guide](./CUSTOMIZATION_GUIDE.md).
+
+You can modify:
+- Color schemes (gradients, backgrounds, UI elements)
+- Text content (headings, labels, button text)
+- UI elements (icons, animations)
+- Responsive design settings
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

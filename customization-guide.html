@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etsy Tag Generator: Customization Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #6366f1;
+            border-bottom: 2px solid #8b5cf6;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #8b5cf6;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #ec4899;
+            margin-top: 25px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .tip {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 10px 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff7e6;
+            border-left: 4px solid #ffa940;
+            padding: 10px 15px;
+            margin: 20px 0;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+        a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            padding-left: 20px;
+        }
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            pre, code {
+                font-size: 10pt;
+                white-space: pre-wrap;
+            }
+            a {
+                color: #000;
+                text-decoration: none;
+            }
+            .no-print {
+                display: none;
+            }
+            @page {
+                margin: 2cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Etsy Tag Generator: Customization Guide</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#color-customization">Color Customization</a>
+                <ul>
+                    <li><a href="#main-gradient-colors">Main Gradient Colors</a></li>
+                    <li><a href="#background-colors">Background Colors</a></li>
+                    <li><a href="#button-and-ui-element-colors">Button and UI Element Colors</a></li>
+                    <li><a href="#animation-and-effect-colors">Animation and Effect Colors</a></li>
+                </ul>
+            </li>
+            <li><a href="#text-customization">Text Customization</a>
+                <ul>
+                    <li><a href="#main-page-content">Main Page Content</a></li>
+                    <li><a href="#form-labels-and-buttons">Form Labels and Buttons</a></li>
+                    <li><a href="#tags-section">Tags Section</a></li>
+                    <li><a href="#other-ui-elements">Other UI Elements</a></li>
+                </ul>
+            </li>
+            <li><a href="#additional-customization">Additional Customization</a>
+                <ul>
+                    <li><a href="#icons">Icons</a></li>
+                    <li><a href="#responsive-design-adjustments">Responsive Design Adjustments</a></li>
+                </ul>
+            </li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#common-color-references">Common Color References</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="color-customization">Color Customization</h2>
+
+    <h3 id="main-gradient-colors">Main Gradient Colors</h3>
+    <p>The application uses gradient colors for main elements like headings, buttons, and the toggle switch. You can change these by modifying the following CSS in <code>client/src/index.css</code>:</p>
+
+    <h4>Heading Gradient (Light Mode)</h4>
+    <pre><code>/* Around line 600 */
+body.light-mode h1 {
+  background-image: linear-gradient(to right, #6366f1, #8b5cf6, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}</code></pre>
+
+    <h4>Button Gradient (Light Mode)</h4>
+    <pre><code>/* Around line 660 */
+body.light-mode .flash-button {
+  background: linear-gradient(to right, #6366f1, #8b5cf6, #ec4899);
+  border: none;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}</code></pre>
+
+    <h4>Toggle Button Gradient (Light Mode)</h4>
+    <pre><code>/* Around line 580 */
+body.light-mode .mode-toggle-bg [data-state="checked"] {
+  background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4) !important;
+}
+
+body.light-mode .mode-toggle-bg [data-state="unchecked"] {
+  background: linear-gradient(to right, #8b5cf6, #ec4899) !important;
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4) !important;
+}</code></pre>
+
+    <h3 id="background-colors">Background Colors</h3>
+
+    <h4>Dark Mode Background</h4>
+    <pre><code>/* Around line 350-360 */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: #0f172a;
+  background: radial-gradient(circle, rgba(30,41,59,1) 0%, rgba(15,23,42,1) 70%, rgba(2,6,23,1) 100%);
+  overflow: hidden;
+}</code></pre>
+
+    <h4>Light Mode Background</h4>
+    <pre><code>/* Around line 480 */
+.light-anim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+  overflow: hidden;
+}</code></pre>
+
+    <h3 id="button-and-ui-element-colors">Button and UI Element Colors</h3>
+
+    <h4>Standard Buttons (Light Mode)</h4>
+    <pre><code>/* Around line 720 */
+body.light-mode button.bg-slate-700,
+body.light-mode button.hover\:bg-slate-600 {
+  background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+}</code></pre>
+
+    <h4>Tag Badges (Light Mode)</h4>
+    <pre><code>/* Around line 650 */
+body.light-mode .copy-tag-badge {
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #334155;
+}</code></pre>
+
+    <h3 id="animation-and-effect-colors">Animation and Effect Colors</h3>
+
+    <h4>Hexagon Animation</h4>
+    <pre><code>/* Around line 435 */
+.animated-hexagons div {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: 2px solid rgba(99, 102, 241, 0.4);
+  animation: movehex 10s linear infinite;
+}
+
+.animated-hexagons div:nth-child(even) {
+  border-color: rgba(139, 92, 246, 0.3);
+  width: 20px;
+  height: 20px;
+  animation-duration: 15s;
+}
+
+.animated-hexagons div:nth-child(3n) {
+  border-color: rgba(192, 132, 252, 0.2);
+  width: 30px;
+  height: 30px;
+  animation-duration: 20s;
+}</code></pre>
+
+    <h2 id="text-customization">Text Customization</h2>
+
+    <h3 id="main-page-content">Main Page Content</h3>
+    <p>To modify the main text content, edit the <code>client/src/pages/Home.tsx</code> file.</p>
+
+    <h4>Main Title</h4>
+    <pre><code>// Around line 180-190
+&lt;h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary"&gt;
+  Etsy SEO Tag Generator
+&lt;/h1&gt;</code></pre>
+
+    <h4>Subtitle</h4>
+    <pre><code>// Around line 190-200
+&lt;p className="text-lg sm:text-xl max-w-2xl mx-auto text-slate-400"&gt;
+  Generate optimized tags for your Etsy listings that boost visibility and increase sales
+&lt;/p&gt;</code></pre>
+
+    <h3 id="form-labels-and-buttons">Form Labels and Buttons</h3>
+
+    <h4>Form Labels</h4>
+    <pre><code>// Around line 220-240
+&lt;Label className="form-label"&gt;Product Description&lt;/Label&gt;
+
+// Category dropdown
+&lt;Label className="form-label"&gt;Category (Optional)&lt;/Label&gt;
+
+// Style input field
+&lt;Label className="form-label"&gt;Style (Optional)&lt;/Label&gt;</code></pre>
+
+    <h4>Generate Button</h4>
+    <pre><code>// Around line 330
+&lt;Button type="submit" className="flash-button" disabled={isSubmitting}&gt;
+  Generate Tags
+&lt;/Button&gt;</code></pre>
+
+    <h3 id="tags-section">Tags Section</h3>
+
+    <h4>Tags Section Header</h4>
+    <pre><code>// Around line 370
+&lt;h2 className="text-xl sm:text-2xl font-bold mb-4"&gt;
+  Generated Tags ({tags.length})
+&lt;/h2&gt;</code></pre>
+
+    <h4>Relevance Score</h4>
+    <pre><code>// Around line 380
+&lt;div className="flex items-center gap-1"&gt;
+  &lt;span&gt;Relevance Score:&lt;/span&gt;
+  &lt;span className="font-semibold"&gt;{relevanceScore}/99&lt;/span&gt;
+  &lt;Tooltip&gt;
+    &lt;TooltipTrigger asChild&gt;
+      &lt;InfoIcon className="h-4 w-4 text-slate-400 cursor-help" /&gt;
+    &lt;/TooltipTrigger&gt;
+    &lt;TooltipContent className="max-w-[200px] text-xs"&gt;
+      Higher scores indicate tags that are more likely to match what buyers are searching for.
+    &lt;/TooltipContent&gt;
+  &lt;/Tooltip&gt;
+&lt;/div&gt;</code></pre>
+
+    <h4>Action Buttons</h4>
+    <pre><code>// Around line 400
+&lt;Button onClick={handleCopyAll} className="bg-slate-700 hover:bg-slate-600"&gt;
+  Copy All Tags
+&lt;/Button&gt;
+
+&lt;Button onClick={handleCopyShareableLink} className="bg-slate-700 hover:bg-slate-600"&gt;
+  Copy Shareable Link
+&lt;/Button&gt;</code></pre>
+
+    <h3 id="other-ui-elements">Other UI Elements</h3>
+
+    <h4>Not Found Page</h4>
+    <p>Navigate to <code>client/src/pages/not-found.tsx</code> to modify the error page content.</p>
+
+    <h2 id="additional-customization">Additional Customization</h2>
+
+    <h3 id="icons">Icons</h3>
+    <p>The application uses icons from the Lucide React library. If you want to change icons, refer to their documentation at <a href="https://lucide.dev/" target="_blank">lucide.dev</a> and replace the icon components.</p>
+
+    <p>Example of icon usage:</p>
+    <pre><code>// Sun icon in toggle
+&lt;Sun className="h-4 w-4 text-yellow-400" /&gt;
+
+// Moon icon in toggle
+&lt;Moon className="h-4 w-4 text-slate-300" /&gt;
+
+// Info icon next to relevance score
+&lt;InfoIcon className="h-4 w-4 text-slate-400 cursor-help" /&gt;</code></pre>
+
+    <h3 id="responsive-design-adjustments">Responsive Design Adjustments</h3>
+    <p>Breakpoints for responsive design are defined using Tailwind CSS classes:</p>
+    <ul>
+        <li><code>sm:</code> - Small devices (640px and up)</li>
+        <li><code>md:</code> - Medium devices (768px and up)</li>
+        <li><code>lg:</code> - Large devices (1024px and up)</li>
+        <li><code>xl:</code> - Extra large devices (1280px and up)</li>
+    </ul>
+    <p>To adjust styles for different screen sizes, modify the corresponding classes.</p>
+
+    <h2 id="best-practices">Best Practices</h2>
+
+    <h3>Color Selection</h3>
+    <ol>
+        <li><strong>Maintain Consistency</strong>: Use a cohesive color scheme throughout the application.</li>
+        <li><strong>Accessibility</strong>: Ensure sufficient contrast between text and background colors.</li>
+        <li><strong>Limit Your Palette</strong>: Use 2-3 primary colors with 1-2 accent colors.</li>
+        <li><strong>Test in Both Modes</strong>: Verify color changes in both dark and light modes.</li>
+    </ol>
+
+    <h3>Text Editing</h3>
+    <ol>
+        <li><strong>Clear Hierarchy</strong>: Maintain a clear hierarchy with heading sizes.</li>
+        <li><strong>Concise Content</strong>: Keep text concise, particularly for buttons and labels.</li>
+        <li><strong>Mobile Friendly</strong>: Ensure text is readable on smaller screens.</li>
+        <li><strong>Consistent Tone</strong>: Maintain a consistent tone and style throughout.</li>
+    </ol>
+
+    <div class="tip">
+        <strong>Tip:</strong> When editing CSS, always keep backups of the original styles in case you need to revert your changes.
+    </div>
+
+    <div class="warning">
+        <strong>Warning:</strong> Some CSS changes may impact the responsive behavior of the application. Always test your changes on different screen sizes.
+    </div>
+
+    <h3>Performance Considerations</h3>
+    <ol>
+        <li><strong>Animation Effects</strong>: Complex animations can impact performance on older devices.</li>
+        <li><strong>Image Optimization</strong>: If adding images, ensure they are optimized for web.</li>
+        <li><strong>Testing</strong>: Always test your changes in different browsers and devices.</li>
+    </ol>
+
+    <h2 id="common-color-references">Common Color References</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Element</th>
+                <th>Default Color</th>
+                <th>CSS Variable/Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Primary</td>
+                <td>Purple</td>
+                <td>#6366f1</td>
+            </tr>
+            <tr>
+                <td>Secondary</td>
+                <td>Pink</td>
+                <td>#ec4899</td>
+            </tr>
+            <tr>
+                <td>Accent</td>
+                <td>Purple</td>
+                <td>#8b5cf6</td>
+            </tr>
+            <tr>
+                <td>Dark Background</td>
+                <td>Navy</td>
+                <td>#0f172a</td>
+            </tr>
+            <tr>
+                <td>Dark Text</td>
+                <td>Slate</td>
+                <td>#1e293b</td>
+            </tr>
+            <tr>
+                <td>Light Background</td>
+                <td>White</td>
+                <td>#ffffff</td>
+            </tr>
+            <tr>
+                <td>Light Text</td>
+                <td>Slate</td>
+                <td>#f8fafc</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <p>For more detailed customization or assistance, please consult the source code or reach out to the developer.</p>
+
+    <div class="no-print">
+        <p><a href="#" onclick="window.print(); return false;">Print this guide</a> or save as PDF using your browser's print functionality.</p>
+    </div>
+</body>
+</html>
