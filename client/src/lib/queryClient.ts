@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { getApiUrl } from "./netlify";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -6,30 +7,6 @@ async function throwIfResNotOk(res: Response) {
     throw new Error(`${res.status}: ${text}`);
   }
 }
-
-// Helper function to determine if we're in a production environment
-const isProduction = (): boolean => {
-  return window.location.hostname !== 'localhost' && 
-         window.location.hostname !== '127.0.0.1';
-};
-
-// Function to get the correct API URL based on environment
-const getApiUrl = (url: string): string => {
-  // If it's already a full URL, return it as is
-  if (url.startsWith('http')) {
-    return url;
-  }
-  
-  // For API endpoints, route to Netlify Functions in production
-  if (url.startsWith('/api/')) {
-    return isProduction() 
-      ? `/.netlify/functions/api${url.replace('/api', '')}`
-      : url;
-  }
-  
-  // Default case - return URL as is
-  return url;
-};
 
 export async function apiRequest<T = any>({
   method,
