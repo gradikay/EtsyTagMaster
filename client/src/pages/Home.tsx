@@ -46,6 +46,30 @@ export default function Home() {
   const [relevanceScore, setRelevanceScore] = useState<number>(0);
   const [, setLocation] = useLocation();
   
+  // Add custom style for select dropdown in light mode
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      body.light-mode [data-radix-popper-content-wrapper] [data-radix-select-content],
+      body.light-mode [data-radix-select-viewport] {
+        background-color: white !important;
+        color: #1e293b !important;
+      }
+      body.light-mode [data-radix-select-item] {
+        color: #1e293b !important;
+      }
+      body.light-mode [data-radix-select-item][data-highlighted] {
+        background-color: #818cf8 !important;
+        color: white !important;
+      }
+    `;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -241,7 +265,9 @@ export default function Home() {
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-slate-700 border-slate-600 text-white text-base SelectContent">
+                            <SelectContent 
+                              className="light-mode-select bg-slate-700 border-slate-600 text-white text-base SelectContent"
+                              style={{ backgroundColor: document.body.classList.contains('light-mode') ? 'white' : '' }}>
                               <SelectItem value="jewelry">Jewelry</SelectItem>
                               <SelectItem value="clothing">Clothing</SelectItem>
                               <SelectItem value="home_decor">Home Decor</SelectItem>
