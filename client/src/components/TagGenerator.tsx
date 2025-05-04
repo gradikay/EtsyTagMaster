@@ -16,6 +16,7 @@ import { Copy, Download, Zap, Lightbulb } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 
+// Interfaces for the API request and response
 interface GenerateTagsRequest {
   description: string;
   category: string;
@@ -35,8 +36,12 @@ const TagGenerator = () => {
 
   const generateTags = useMutation({
     mutationFn: async (data: GenerateTagsRequest) => {
-      const response = await apiRequest("POST", "/api/generate-tags", data);
-      return response.json() as Promise<GenerateTagsResponse>;
+      const response = await apiRequest({
+        method: "POST", 
+        url: "/api/generate-tags", 
+        body: data
+      });
+      return response as GenerateTagsResponse;
     },
   });
 

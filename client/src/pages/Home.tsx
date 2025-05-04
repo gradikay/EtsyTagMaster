@@ -167,9 +167,9 @@ export default function Home() {
                     <Button 
                       type="submit" 
                       disabled={generateTagsMutation.isPending}
-                      className="py-6 px-10 text-lg font-medium relative flash-button"
+                      className="py-6 px-10 text-lg font-medium relative flash-button text-white"
                     >
-                      <span className="relative z-10 flex items-center justify-center bg-slate-900 p-2 rounded-md">
+                      <span className="relative z-10 flex items-center justify-center">
                         {generateTagsMutation.isPending ? (
                           <>
                             <RefreshCcw className="mr-2 h-5 w-5 animate-spin" />

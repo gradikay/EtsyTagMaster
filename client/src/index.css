@@ -120,6 +120,8 @@
 }
 
 .flash-button {
+  background: none !important;
+  border: none !important;
   position: relative;
   overflow: hidden;
 }
