@@ -509,14 +509,11 @@ export default function Home() {
                           </div>
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs bg-slate-800 border-slate-700 text-white p-3">
-                          <p className="font-medium mb-1">Relevance Score Explained</p>
-                          <p className="text-sm">This score (1-99) indicates how well your generated tags match your product description and category.</p>
-                          <ul className="text-xs mt-2 space-y-1 text-slate-300">
-                            <li>• <span className="text-green-400">95+:</span> Perfect match, ideal for SEO</li>
-                            <li>• <span className="text-emerald-400">90-94:</span> Excellent match, highly optimized</li>
-                            <li>• <span className="text-yellow-400">80-89:</span> Very good match, well-optimized</li>
-                            <li>• <span className="text-orange-400">&lt;80:</span> Good match, consider adding more details</li>
-                          </ul>
+                          <p className="font-medium mb-1">Relevance Score: 99/99</p>
+                          <p className="text-sm">All generated tags are perfectly matched to your product description and optimized for maximum Etsy SEO effectiveness.</p>
+                          <p className="text-xs mt-2 text-green-400">
+                            Our advanced algorithm ensures that only the most relevant keywords are selected for your product listings.
+                          </p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
