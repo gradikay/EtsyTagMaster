@@ -569,31 +569,19 @@ body.light-mode .text-slate-300 {
 }
 
 body.light-mode .mode-toggle-bg {
-  background: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(99, 102, 241, 0.3) !important;
-  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3) !important;
-  padding: 3px 6px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(147, 197, 253, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.3) !important;
+  padding: 3px 4px !important;
 }
 
 /* Switch track and thumb styling for light mode */
 body.light-mode [data-state="checked"] {
-  background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5) !important;
+  background-color: #6366f1 !important;
 }
 
 body.light-mode [data-state="unchecked"] {
-  background: linear-gradient(to right, #f43f5e, #ec4899) !important;
-  box-shadow: 0 0 8px rgba(244, 63, 94, 0.4) !important;
-}
-
-/* Make the switch thumb white with a glow effect in light mode */
-body.light-mode [role="switch"] [data-state] span {
-  background: white !important;
-  border: 2px solid rgba(99, 102, 241, 0.3) !important;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
-  transform: scale(0.9) !important;
+  background-color: #cbd5e1 !important;
 }
 
 body.light-mode h1 {
@@ -675,7 +663,49 @@ body.light-mode .flash-button:active {
   transform: translateY(1px);
 }
 
-/* Preserving only the toggle button styling in light mode, reverting dropdown styling */
+body.light-mode [data-radix-select-item][data-highlighted],
+body.light-mode [data-radix-select-item][data-state="checked"] {
+  background-color: #818cf8 !important;
+  color: white !important;
+}
+
+/* Light mode dropdown overrides - aggressive approach */
+body.light-mode * [role="listbox"],
+body.light-mode * [role="option"],
+body.light-mode * [data-radix-select-viewport],
+body.light-mode * [data-radix-select-content],
+body.light-mode * [data-radix-popper-content-wrapper] * {
+  background-color: white !important;
+  color: #1e293b !important;
+}
+
+/* Direct override for Radix UI Select Content */
+body.light-mode [data-radix-popper-content-wrapper] > div,
+body.light-mode [data-radix-select-portal] > div,
+body.light-mode [data-radix-select-content] {
+  background-color: white !important;
+  color: #1e293b !important;
+  border: 1px solid rgba(147, 197, 253, 0.4) !important;
+  box-shadow: 0 8px 30px rgba(147, 197, 253, 0.2) !important;
+}
+
+/* Override for hover states */
+body.light-mode * [role="option"]:hover,
+body.light-mode * [data-radix-select-item]:hover,
+body.light-mode * [data-highlighted="true"] {
+  background-color: #818cf8 !important;
+  color: white !important;
+}
+
+/* Additional force override for select items */
+body.light-mode [data-radix-select-item] {
+  background-color: white !important;
+  color: #1e293b !important;
+}
+
+body.light-mode .SelectItem {
+  color: #1e293b !important;
+}
 
 body.light-mode button.bg-slate-700,
 body.light-mode button.hover\:bg-slate-600 {
