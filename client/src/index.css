@@ -99,6 +99,42 @@
   animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* Animated border glow effect */
+@keyframes borderAnimate {
+  0% {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 10px 1px hsl(var(--primary) / 0.3);
+  }
+  33% {
+    border-color: hsl(var(--secondary));
+    box-shadow: 0 0 10px 1px hsl(var(--secondary) / 0.3);
+  }
+  66% {
+    border-color: hsl(var(--accent));
+    box-shadow: 0 0 10px 1px hsl(var(--accent) / 0.3);
+  }
+  100% {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 10px 1px hsl(var(--primary) / 0.3);
+  }
+}
+
+.animate-border-glow {
+  position: relative;
+}
+
+.animate-border-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius) + 2px);
+  border: 2px solid transparent;
+  background: transparent;
+  animation: borderAnimate 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* Glass morphism effects */
 .glass-effect {
   backdrop-filter: blur(8px);
