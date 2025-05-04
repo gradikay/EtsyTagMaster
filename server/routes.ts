@@ -87,7 +87,7 @@ function generateTags(description: string, category?: string, style?: string): s
     }
   }
   
-  // Add common high-performing Etsy tags
+  // Add common high-performing Etsy tags - expanded to ensure we have enough
   const commonTags = [
     'handmade',
     'custom gift',
@@ -96,7 +96,24 @@ function generateTags(description: string, category?: string, style?: string): s
     'gift idea',
     'one of a kind',
     'handcrafted',
-    'made to order'
+    'made to order',
+    'unique design',
+    'quality product',
+    'etsy bestseller',
+    'trending item',
+    'special gift',
+    'gift for her',
+    'gift for him',
+    'perfect gift',
+    'anniversary gift',
+    'birthday gift',
+    'holiday gift',
+    'christmas gift',
+    'holiday present',
+    'bestselling item',
+    'popular gift',
+    'customizable',
+    'handmade with love'
   ];
   
   // Add gift-related tags if "gift" is mentioned
@@ -111,13 +128,47 @@ function generateTags(description: string, category?: string, style?: string): s
   // Combine all tags
   const allTags = [...potentialTags, ...commonTags];
   
-  // Deduplicate, filter by length, and get exactly 13 tags if possible (Etsy max)
+  // Deduplicate, filter by length, and get exactly 13 tags (Etsy max)
   const uniqueTagsSet = new Set(allTags);
-  const uniqueTags = Array.from(uniqueTagsSet)
+  let uniqueTags = Array.from(uniqueTagsSet)
     // Remove any commas or slashes, and ensure appropriate length
     .map(tag => tag.replace(/[,\/\\]/g, '').trim())
-    .filter(tag => tag.length > 0 && tag.length <= 20) // Etsy tag length limit
-    .slice(0, 13); // Etsy allows maximum 13 tags
+    .filter(tag => tag.length > 0 && tag.length <= 20); // Etsy tag length limit
+  
+  // Ensure we always have 13 tags by adding additional tags if needed
+  if (uniqueTags.length < 13) {
+    // Add more generic, high-performing Etsy tags as backup
+    const fallbackTags = [
+      'handmade item',
+      'gift under 50',
+      'gift under 25',
+      'gift under 100',
+      'shop small',
+      'small business',
+      'handmade gift',
+      'unique present',
+      'gift idea',
+      'gift for friend',
+      'special occasion',
+      'thoughtful gift',
+      'etsy find',
+      'new arrival',
+      'bestseller',
+      'trending now',
+      'limited edition',
+      'made with love',
+      'handcrafted item'
+    ];
+    
+    // Filter out any that are already in our tags
+    const additionalTags = fallbackTags.filter(tag => !uniqueTags.includes(tag));
+    
+    // Add as many as needed to reach exactly 13 tags
+    uniqueTags = [...uniqueTags, ...additionalTags.slice(0, 13 - uniqueTags.length)];
+  }
+  
+  // Final trim to exactly 13 tags
+  uniqueTags = uniqueTags.slice(0, 13);
   
   return uniqueTags;
 }

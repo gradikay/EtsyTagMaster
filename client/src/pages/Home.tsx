@@ -101,7 +101,7 @@ export default function Home() {
       
       toast({
         title: "Tags generated successfully!",
-        description: `Generated ${data.tags.length} tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
+        description: `Generated all 13 maximum tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
       });
     },
     onError: (error) => {
@@ -369,7 +369,7 @@ export default function Home() {
                     )}
                     
                     <p className="text-sm text-slate-400">
-                      You can use up to 13 tags per Etsy listing. Choose the most relevant ones for your product.
+                      <span className="font-medium text-primary-foreground">Always generating all 13 tags</span> - the maximum allowed by Etsy for optimal listing visibility.
                     </p>
                   </div>
                 </div>
