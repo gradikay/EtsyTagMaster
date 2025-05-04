@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etsy SEO Tag Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body class="dark-mode">
+    <div class="animated-background">
+        <div class="stars"></div>
+        <!-- Hexagons will be added via JavaScript -->
+    </div>
+
+    <div class="main-container min-h-screen">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <!-- Header Section -->
+            <header class="relative mb-12 animate-fade-in">
+                <div class="absolute top-1 right-2 flex items-center gap-2 z-20">
+                    <div class="flex items-center gap-2 p-2 bg-slate-800/70 rounded-full mode-toggle-bg">
+                        <svg class="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <svg class="h-4 w-4 text-slate-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="text-center pt-8 sm:pt-2">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r">
+                        Etsy SEO Tag Generator
+                    </h1>
+                    <p class="text-lg sm:text-xl max-w-2xl mx-auto text-slate-400">
+                        Generate optimized tags for your Etsy listings that boost visibility and increase sales
+                    </p>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="animate-fade-in">
+                <div class="glass-effect bg-slate-900/40 rounded-xl p-6 mb-8">
+                    <form id="tag-form" class="space-y-6">
+                        <!-- Description Input -->
+                        <div class="space-y-2">
+                            <label for="description" class="form-label block font-medium">Product Description</label>
+                            <textarea id="description" name="description" rows="5" class="w-full h-32 bg-slate-800/70 border border-slate-700 rounded-md p-3 text-white"
+                                placeholder="Enter your product description here..."></textarea>
+                        </div>
+
+                        <!-- Options Row -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Category Dropdown -->
+                            <div class="space-y-2">
+                                <label for="category" class="form-label block font-medium">Category (Optional)</label>
+                                <select id="category" name="category" class="w-full bg-slate-800/70 border border-slate-700 rounded-md p-3 text-white">
+                                    <option value="">Select a category</option>
+                                    <option value="jewelry">Jewelry & Accessories</option>
+                                    <option value="clothing">Clothing & Shoes</option>
+                                    <option value="home">Home & Living</option>
+                                    <option value="wedding">Wedding & Party</option>
+                                    <option value="toys">Toys & Entertainment</option>
+                                    <option value="art">Art & Collectibles</option>
+                                    <option value="craft">Craft Supplies</option>
+                                    <option value="vintage">Vintage</option>
+                                </select>
+                            </div>
+
+                            <!-- Style Input -->
+                            <div class="space-y-2">
+                                <label for="style" class="form-label block font-medium">Style (Optional)</label>
+                                <input type="text" id="style" name="style" class="w-full bg-slate-800/70 border border-slate-700 rounded-md p-3 text-white"
+                                    placeholder="e.g., Minimalist, Bohemian, Vintage">
+                            </div>
+                        </div>
+
+                        <!-- Configuration Options -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Max Tags Slider -->
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <label for="maxTags" class="form-label font-medium">Maximum Tags</label>
+                                    <span id="maxTagsValue" class="text-slate-400">13</span>
+                                </div>
+                                <input type="range" min="1" max="50" value="13" id="maxTags" name="maxTags" class="w-full slider">
+                            </div>
+
+                            <!-- Max Words Per Tag Slider -->
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <label for="maxWordsPerTag" class="form-label font-medium">Max Words Per Tag</label>
+                                    <span id="maxWordsValue" class="text-slate-400">3</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="3" id="maxWordsPerTag" name="maxWordsPerTag" class="w-full slider">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-center pt-4">
+                            <button type="submit" class="flash-button px-6 py-3 rounded-md font-medium text-white">
+                                Generate Tags
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="glass-effect bg-slate-900/40 rounded-xl p-6 hidden">
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl sm:text-2xl font-bold" id="tags-count">Generated Tags (0)</h2>
+                            
+                            <div class="flex items-center gap-1">
+                                <span>Relevance Score:</span>
+                                <span class="font-semibold" id="relevance-score">99/99</span>
+                                <div class="relative inline-block tooltip-container">
+                                    <svg class="h-4 w-4 text-slate-400 cursor-help" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    <div class="tooltip max-w-[200px] text-xs">
+                                        Higher scores indicate tags that are more likely to match what buyers are searching for.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags Container -->
+                        <div id="tags-container" class="flex flex-wrap gap-2 mb-6">
+                            <!-- Tags will be inserted here by JavaScript -->
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-3 justify-end">
+                            <button id="copy-all-btn" class="action-btn bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-md">
+                                Copy All Tags
+                            </button>
+                            <button id="copy-link-btn" class="action-btn bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-md">
+                                Copy Shareable Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="mt-12 text-center text-slate-500 text-sm">
+                <p>Etsy SEO Tag Generator | For personal use only</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <svg class="toast-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span id="toast-message">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
