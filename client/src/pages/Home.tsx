@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Sparkles, RefreshCcw } from "lucide-react";
+import { Sparkles, RefreshCcw, Link as LinkIcon, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 
 interface GenerateTagsRequest {
   description: string;
@@ -33,6 +34,8 @@ const formSchema = z.object({
 export default function Home() {
   const { toast } = useToast();
   const [tags, setTags] = useState<string[]>([]);
+  const [relevanceScore, setRelevanceScore] = useState<number>(0);
+  const [, setLocation] = useLocation();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,6 +45,40 @@ export default function Home() {
       style: "",
     },
   });
+  
+  // Parse URL parameters when the component loads
+  useEffect(() => {
+    // Get URL search params
+    const params = new URLSearchParams(window.location.search);
+    const sharedTags = params.get('tags');
+    const sharedScore = params.get('score');
+    
+    // If there are shared tags in the URL, update the state
+    if (sharedTags) {
+      try {
+        const decodedTags = JSON.parse(decodeURIComponent(sharedTags));
+        if (Array.isArray(decodedTags) && decodedTags.length > 0) {
+          setTags(decodedTags);
+          
+          // Set the relevance score if available
+          if (sharedScore) {
+            const score = parseFloat(sharedScore);
+            if (!isNaN(score)) {
+              setRelevanceScore(score);
+            }
+          }
+          
+          // Show a toast notification
+          toast({
+            title: "Shared tags loaded",
+            description: `Loaded ${decodedTags.length} shared tags`,
+          });
+        }
+      } catch (e) {
+        console.error("Error parsing shared tags:", e);
+      }
+    }
+  }, [toast]);
 
   const generateTagsMutation = useMutation({
     mutationFn: async (data: GenerateTagsRequest) => {
@@ -54,6 +91,14 @@ export default function Home() {
     },
     onSuccess: (data) => {
       setTags(data.tags);
+      setRelevanceScore(data.relevanceScore);
+      
+      // Update URL with the generated tags for sharing
+      const tagsParam = encodeURIComponent(JSON.stringify(data.tags));
+      const scoreParam = data.relevanceScore.toString();
+      const newUrl = `?tags=${tagsParam}&score=${scoreParam}`;
+      window.history.pushState(null, '', newUrl);
+      
       toast({
         title: "Tags generated successfully!",
         description: `Generated ${data.tags.length} tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
@@ -215,7 +260,7 @@ export default function Home() {
                     ))}
                   </div>
                   
-                  {/* Copy tags button for mobile convenience */}
+                  {/* Result actions: Copy tags and share link buttons */}
                   <div className="mt-4 flex flex-wrap gap-3">
                     <Button
                       size="sm"
@@ -237,11 +282,58 @@ export default function Home() {
                           });
                       }}
                     >
-                      <RefreshCcw className="mr-2 h-4 w-4" /> Copy All Tags
+                      <Copy className="mr-2 h-4 w-4" /> Copy All Tags
+                    </Button>
+                    
+                    <Button
+                      size="sm"
+                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto"
+                      onClick={() => {
+                        // Get the current URL with query parameters
+                        const shareableUrl = window.location.href;
+                        
+                        // Copy to clipboard
+                        navigator.clipboard.writeText(shareableUrl)
+                          .then(() => {
+                            toast({
+                              title: "Shareable link copied!",
+                              description: "Link to these tags has been copied to clipboard"
+                            });
+                          })
+                          .catch(() => {
+                            toast({
+                              title: "Copy failed",
+                              description: "Could not copy link to clipboard",
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                    >
+                      <LinkIcon className="mr-2 h-4 w-4" /> Copy Shareable Link
                     </Button>
                   </div>
                   
                   <div className="mt-4 pt-4 border-t border-slate-700">
+                    {/* Show relevance score when available */}
+                    {relevanceScore > 0 && (
+                      <div className="mb-2 flex items-center">
+                        <div className="text-sm font-medium">Relevance Score:</div>
+                        <div className="ml-2 px-2 py-0.5 bg-gradient-to-r from-primary/30 to-secondary/30 rounded text-sm">
+                          {relevanceScore.toFixed(1)}/10
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Check if we're viewing shared tags */}
+                    {window.location.search.includes('tags=') && (
+                      <div className="mb-3 p-2 bg-blue-900/20 border border-blue-800/30 rounded-md">
+                        <p className="text-sm text-blue-300 flex items-center">
+                          <LinkIcon className="h-3 w-3 mr-1" /> 
+                          You're viewing shared tags. Generate your own by using the form.
+                        </p>
+                      </div>
+                    )}
+                    
                     <p className="text-sm text-slate-400">
                       You can use up to 13 tags per Etsy listing. Choose the most relevant ones for your product.
                     </p>
