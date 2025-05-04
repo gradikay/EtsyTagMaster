@@ -5,8 +5,13 @@ const cors = require('cors');
 // Create an Express app
 const app = express();
 
-// Enable CORS
-app.use(cors());
+// Enable CORS for all origins
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+}));
 
 // Parse JSON request bodies
 app.use(express.json());
@@ -100,7 +105,7 @@ function generateTags(description, category = '', style = '') {
 }
 
 // API endpoint for generating tags
-app.post('/api/generate-tags', (req, res) => {
+app.post('/generate-tags', (req, res) => {
   try {
     const { description, category, style, maxTags = 13, maxWordsPerTag = 3 } = req.body;
     
@@ -134,7 +139,7 @@ app.post('/api/generate-tags', (req, res) => {
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 

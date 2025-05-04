@@ -59,6 +59,7 @@ The application uses Netlify Functions to handle the backend API, so there's no 
   - Node.js with Express
   - RESTful API architecture
   - Intelligent tag generation algorithm
+  - Netlify Functions for serverless deployment
 
 ## 🛠️ Development Setup
 
@@ -91,11 +92,35 @@ The application uses Netlify Functions to handle the backend API, so there's no 
 
 4. Open your browser and navigate to `http://localhost:5000`
 
+### Testing Netlify Functions Locally
+
+To test the Netlify Functions locally:
+
+1. Install Netlify CLI globally (if not already installed):
+   ```bash
+   npm install netlify-cli -g
+   ```
+
+2. Run the Netlify dev environment:
+   ```bash
+   netlify dev
+   ```
+
+3. Open your browser and navigate to the URL shown in the console (typically `http://localhost:8888`)
+
 ## 🔧 Configuration
 
 The application can be configured through the following environment variables:
 
 - `PORT`: The port on which the server runs (default: 5000)
+
+### Netlify Environment Variables
+
+For Netlify deployment, you can set environment variables in the Netlify dashboard:
+
+1. Go to your site settings in Netlify
+2. Navigate to "Build & deploy" > "Environment"
+3. Add environment variables as needed
 
 ## 🤝 Contributing
 
@@ -114,6 +139,7 @@ This project is for personal use only. All rights reserved.
 ## 🙏 Acknowledgements
 
 - [Replit](https://replit.com) - Development platform
+- [Netlify](https://netlify.com) - Deployment and hosting platform
 - [shadcn/ui](https://ui.shadcn.com/) - UI component library
 - [TailwindCSS](https://tailwindcss.com/) - CSS framework
 - [React](https://reactjs.org/) - Frontend library
