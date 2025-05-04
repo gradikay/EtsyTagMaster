@@ -8,6 +8,7 @@ const generateTagsSchema = z.object({
   description: z.string().min(1, "Product description is required"),
   category: z.string().optional(),
   style: z.string().optional(),
+  maxTags: z.number().min(1).max(300).optional().default(13),
 });
 
 // Helper function to generate SEO tags based on description
@@ -194,12 +195,22 @@ function generateTags(description: string, category?: string, style?: string): s
   // Deduplicate and clean tags, returning ALL possible matches from the description
   const uniqueTagsSet = new Set(allTags);
   const uniqueTags = Array.from(uniqueTagsSet)
-    // Remove any commas or slashes, and ensure appropriate length
-    .map(tag => tag.replace(/[,\/\\]/g, '').trim())
+    // Remove any special characters except spaces (for multi-word tags)
+    .map(tag => tag.replace(/[^\w\s]/g, '').trim())
     // Ensure tags are reasonable length and not empty
     .filter(tag => tag.length > 0 && tag.length <= 80)
-    // Sort by length (shortest first) for better readability
-    .sort((a, b) => a.length - b.length);
+    // Filter duplicates that might have been created during special char removal
+    .filter((tag, index, self) => self.indexOf(tag) === index)
+    // Sort by relevance (longer tags are usually more specific/relevant)
+    .sort((a, b) => {
+      // First prioritize word count (more words = more specific)
+      const aWordCount = a.split(' ').length;
+      const bWordCount = b.split(' ').length;
+      if (aWordCount !== bWordCount) return bWordCount - aWordCount;
+      
+      // Then prioritize length for single-word tags
+      return b.length - a.length;
+    });
   
   return uniqueTags;
 }
@@ -208,10 +219,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Tag generation endpoint
   app.post("/api/generate-tags", async (req, res) => {
     try {
-      const { description, category, style } = generateTagsSchema.parse(req.body);
+      const { description, category, style, maxTags } = generateTagsSchema.parse(req.body);
       
       // Generate tags based on input
-      const tags = generateTags(description, category, style);
+      const allGeneratedTags = generateTags(description, category, style);
+      
+      // Limit to the requested number of tags (default is 13)
+      const tags = allGeneratedTags.slice(0, maxTags);
       
       // Calculate a more accurate relevance score based on several factors
       // - Number of tags generated (unlimited)
@@ -240,7 +254,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({
         tags,
-        relevanceScore
+        relevanceScore,
+        totalAvailableTags: allGeneratedTags.length
       });
     } catch (error) {
       if (error instanceof z.ZodError) {

@@ -6,9 +6,10 @@ import { useForm } from "react-hook-form";
 import { Sparkles, RefreshCcw, Link as LinkIcon, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
@@ -18,17 +19,20 @@ interface GenerateTagsRequest {
   description: string;
   category: string;
   style?: string;
+  maxTags?: number;
 }
 
 interface GenerateTagsResponse {
   tags: string[];
   relevanceScore: number;
+  totalAvailableTags: number;
 }
 
 const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   category: z.string().min(1, "Please select a category"),
   style: z.string().optional(),
+  maxTags: z.number().min(1).max(200).default(13),
 });
 
 export default function Home() {
@@ -43,6 +47,7 @@ export default function Home() {
       description: "",
       category: "",
       style: "",
+      maxTags: 13,
     },
   });
   
@@ -215,6 +220,33 @@ export default function Home() {
                       )}
                     />
                   </div>
+                  
+                  <FormField
+                    control={form.control}
+                    name="maxTags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between items-center">
+                          <FormLabel className="text-sm sm:text-base">Number of Tags (Default: 13)</FormLabel>
+                          <span className="text-sm text-slate-300">{field.value} tags</span>
+                        </div>
+                        <FormControl>
+                          <Slider 
+                            defaultValue={[field.value]} 
+                            max={100} 
+                            min={1} 
+                            step={1}
+                            onValueChange={(vals) => field.onChange(vals[0])}
+                            className="py-4"
+                          />
+                        </FormControl>
+                        <FormDescription className="text-xs text-slate-400">
+                          Etsy allows up to 13 tags per listing, but you can generate more to choose from
+                        </FormDescription>
+                        <FormMessage className="text-sm" />
+                      </FormItem>
+                    )}
+                  />
 
                   <div className="flex justify-center pt-2">
                     <Button 
