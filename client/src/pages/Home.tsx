@@ -50,51 +50,51 @@ export default function Home() {
   useEffect(() => {
     const styleElement = document.createElement('style');
     styleElement.textContent = `
-      /* Target the select dropdown wrapper */
-      body.light-mode [data-radix-popper-content-wrapper] {
-        --background: white !important;
-        --foreground: #1e293b !important;
-      }
-      
-      /* Target the select content */
-      body.light-mode [data-radix-popper-content-wrapper] [data-radix-select-content],
+      /* CRITICAL: Force white background for select dropdown content in light mode */
+      body.light-mode div[data-radix-popper-content-wrapper] > div,
+      body.light-mode div[data-radix-popper-content-wrapper] [role="listbox"],
+      body.light-mode div[data-radix-popper-content-wrapper] [role="presentation"],
       body.light-mode [data-radix-select-content],
-      body.light-mode [data-radix-select-portal] {
-        background-color: white !important;
-        border-color: rgba(147, 197, 253, 0.4) !important;
-        box-shadow: 0 8px 30px rgba(147, 197, 253, 0.2) !important;
-      }
-      
-      /* Target the select viewport */
-      body.light-mode [data-radix-select-viewport] {
-        background-color: white !important;
-        color: #1e293b !important;
-      }
-      
-      /* Target individual select items */
+      body.light-mode [data-radix-select-viewport],
       body.light-mode [data-radix-select-item] {
+        background-color: white !important;
         color: #1e293b !important;
-        background-color: transparent !important;
+      }
+      
+      /* Very specific override to make sure this takes effect */
+      body.light-mode .SelectContent.light-mode-select.bg-slate-700 {
+        background-color: white !important;
+      }
+      
+      /* Target any dropdown item */
+      body.light-mode div[data-radix-popper-content-wrapper] [role="option"] {
+        background-color: white !important;
+        color: #1e293b !important;
       }
       
       /* Target highlighted/selected select items */
       body.light-mode [data-radix-select-item][data-highlighted],
-      body.light-mode [data-radix-select-item]:hover,
-      body.light-mode [data-radix-select-item][data-state="checked"] {
+      body.light-mode [data-radix-select-item][data-state="checked"],
+      body.light-mode div[data-radix-popper-content-wrapper] [role="option"][data-highlighted] {
         background-color: #818cf8 !important;
         color: white !important;
       }
       
-      /* Target the entire dropdown menu */
-      body.light-mode .SelectContent {
-        background-color: white !important;
+      /* Target any element with select-item class */
+      body.light-mode .SelectItem {
         color: #1e293b !important;
-        border-color: rgba(147, 197, 253, 0.4) !important;
-        box-shadow: 0 8px 30px rgba(147, 197, 253, 0.2) !important;
+        background-color: white !important;
       }
       
-      /* Target select item text */
-      body.light-mode .SelectItem {
+      /* Add proper borders and shadows */
+      body.light-mode div[data-radix-popper-content-wrapper] > div {
+        border: 1px solid rgba(147, 197, 253, 0.4) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+      }
+      
+      /* Ensure proper hover states */
+      body.light-mode [data-radix-select-item]:hover {
+        background-color: #e2e8f0 !important;
         color: #1e293b !important;
       }
     `;
