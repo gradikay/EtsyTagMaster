@@ -163,27 +163,27 @@ export default function Home() {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    disabled={generateTagsMutation.isPending}
-                    className="w-full py-6 text-lg font-medium relative overflow-hidden group animate-border-glow"
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-primary via-purple-500 to-secondary opacity-75 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    <span className="absolute inset-[2px] bg-slate-900 rounded-[4px]"></span>
-                    <span className="relative flex items-center justify-center">
-                      {generateTagsMutation.isPending ? (
-                        <>
-                          <RefreshCcw className="mr-2 h-5 w-5 animate-spin" />
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="mr-2 h-5 w-5" />
-                          Generate Tags
-                        </>
-                      )}
-                    </span>
-                  </Button>
+                  <div className="flex justify-center">
+                    <Button 
+                      type="submit" 
+                      disabled={generateTagsMutation.isPending}
+                      className="py-6 px-10 text-lg font-medium relative flash-button"
+                    >
+                      <span className="relative z-10 flex items-center justify-center bg-slate-900 p-2 rounded-md">
+                        {generateTagsMutation.isPending ? (
+                          <>
+                            <RefreshCcw className="mr-2 h-5 w-5 animate-spin" />
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="mr-2 h-5 w-5" />
+                            Generate Tags
+                          </>
+                        )}
+                      </span>
+                    </Button>
+                  </div>
                 </form>
               </Form>
             </div>

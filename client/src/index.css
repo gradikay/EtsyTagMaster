@@ -99,40 +99,46 @@
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* Animated border glow effect */
-@keyframes borderAnimate {
+/* Animated flashing button effect */
+@keyframes colorFlash {
   0% {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 0 10px 1px hsl(var(--primary) / 0.3);
+    background-color: hsl(var(--primary));
+    box-shadow: 0 0 15px 2px hsl(var(--primary));
   }
   33% {
-    border-color: hsl(var(--secondary));
-    box-shadow: 0 0 10px 1px hsl(var(--secondary) / 0.3);
+    background-color: hsl(var(--secondary));
+    box-shadow: 0 0 15px 2px hsl(var(--secondary));
   }
   66% {
-    border-color: hsl(var(--accent));
-    box-shadow: 0 0 10px 1px hsl(var(--accent) / 0.3);
+    background-color: hsl(var(--accent));
+    box-shadow: 0 0 15px 2px hsl(var(--accent));
   }
   100% {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 0 10px 1px hsl(var(--primary) / 0.3);
+    background-color: hsl(var(--primary));
+    box-shadow: 0 0 15px 2px hsl(var(--primary));
   }
 }
 
-.animate-border-glow {
+.flash-button {
   position: relative;
+  overflow: hidden;
 }
 
-.animate-border-glow::after {
+.flash-button::before {
   content: '';
   position: absolute;
-  inset: -2px;
-  border-radius: calc(var(--radius) + 2px);
-  border: 2px solid transparent;
+  inset: 0;
   background: transparent;
-  animation: borderAnimate 4s linear infinite;
+  animation: colorFlash 2s linear infinite;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
+  border-radius: var(--radius);
+  opacity: 0.8;
+}
+
+.flash-button:hover::before {
+  animation-duration: 1s;
+  opacity: 1;
 }
 
 /* Glass morphism effects */
