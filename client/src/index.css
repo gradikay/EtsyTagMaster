@@ -569,19 +569,31 @@ body.light-mode .text-slate-300 {
 }
 
 body.light-mode .mode-toggle-bg {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 1px solid rgba(147, 197, 253, 0.5) !important;
-  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.3) !important;
-  padding: 3px 4px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3) !important;
+  padding: 3px 6px !important;
 }
 
 /* Switch track and thumb styling for light mode */
 body.light-mode [data-state="checked"] {
-  background-color: #6366f1 !important;
+  background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5) !important;
 }
 
 body.light-mode [data-state="unchecked"] {
-  background-color: #cbd5e1 !important;
+  background: linear-gradient(to right, #f43f5e, #ec4899) !important;
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.4) !important;
+}
+
+/* Make the switch thumb white with a glow effect in light mode */
+body.light-mode [role="switch"] [data-state] span {
+  background: white !important;
+  border: 2px solid rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
+  transform: scale(0.9) !important;
 }
 
 body.light-mode h1 {
