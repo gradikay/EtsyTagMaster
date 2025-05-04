@@ -20,12 +20,11 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-8">
           <a href="#features" className="font-medium text-secondary hover:text-primary transition">Features</a>
           <a href="#how-it-works" className="font-medium text-secondary hover:text-primary transition">How It Works</a>
-          <a href="#pricing" className="font-medium text-secondary hover:text-primary transition">Pricing</a>
-          <a href="#testimonials" className="font-medium text-secondary hover:text-primary transition">Testimonials</a>
+          <a href="#try-now" className="font-medium text-secondary hover:text-primary transition">Try It</a>
         </div>
         
         <div className="flex items-center space-x-4">
-          <a href="#try-now" className="hidden md:block text-sm font-semibold bg-primary text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Try for Free</a>
+          <a href="#try-now" className="hidden md:block text-sm font-semibold bg-primary text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Generate Tags</a>
           <button 
             className="md:hidden text-secondary"
             onClick={toggleMobileMenu}
@@ -60,26 +59,12 @@ const Header = () => {
           >
             How It Works
           </a>
-          <a 
-            href="#pricing" 
-            className="py-2 font-medium text-secondary hover:text-primary transition"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Pricing
-          </a>
-          <a 
-            href="#testimonials" 
-            className="py-2 font-medium text-secondary hover:text-primary transition"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Testimonials
-          </a>
           <Button 
             asChild
             className="w-full bg-primary text-white hover:bg-primary/90"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <a href="#try-now">Try for Free</a>
+            <a href="#try-now">Try Now</a>
           </Button>
         </div>
       </div>

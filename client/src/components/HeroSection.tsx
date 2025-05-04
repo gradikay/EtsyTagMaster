@@ -12,37 +12,15 @@ const HeroSection = () => {
               Boost Your Etsy Sales with <span className="text-yellow-200">Optimized Tags</span>
             </h1>
             <p className="text-lg md:text-xl mb-8 text-white text-opacity-90">
-              Our AI-powered tag generator creates high-converting keywords specifically for Etsy's algorithm. Get more visibility, clicks, and sales for your shop.
+              The simple tag generator tool creates optimized keywords for Etsy's search algorithm. Get more visibility and better search ranking for your Etsy listings.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button asChild className="bg-white text-primary hover:bg-white/90">
-                <a href="#try-now">Try for Free</a>
+                <a href="#try-now">Generate Tags Now</a>
               </Button>
               <Button asChild variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white/10">
-                <a href="#how-it-works">See How It Works</a>
+                <a href="#how-it-works">How It Works</a>
               </Button>
-            </div>
-            <div className="mt-8 flex items-center">
-              <div className="flex -space-x-2">
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-              </div>
-              <p className="ml-4 text-sm">
-                <span className="font-bold">2,500+</span> Etsy sellers trust our tool
-              </p>
             </div>
           </div>
           <div className="w-full lg:w-1/2 lg:pl-12">
