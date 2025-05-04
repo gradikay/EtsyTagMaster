@@ -220,6 +220,7 @@ export default function Home() {
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
           <div className="absolute top-1 right-2 sm:top-0 sm:right-2 flex items-center gap-2 z-20">
+            {/* Theme toggle */}
             <div className="flex items-center gap-2 p-2 bg-slate-800/70 rounded-full mode-toggle-bg">
               <Sun className="h-4 w-4 text-yellow-400" />
               <Switch 
@@ -237,6 +238,11 @@ export default function Home() {
                     if (mainContainer) {
                       mainContainer.setAttribute('style', 'background: none !important');
                     }
+                    
+                    // Update animation colors for light mode
+                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.08)');
+                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.08)');
+                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.08)');
                   } else {
                     // Reset for dark mode
                     document.body.style.background = "";
@@ -244,12 +250,55 @@ export default function Home() {
                     if (mainContainer) {
                       mainContainer.setAttribute('style', '');
                     }
+                    
+                    // Reset animation colors for dark mode
+                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.05)');
+                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.05)');
+                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.05)');
                   }
                 }}
                 defaultChecked={true}
               />
               <Moon className="h-4 w-4 text-slate-300" />
             </div>
+            
+            {/* Background animation color picker toggle */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button 
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/70 text-primary hover:bg-slate-700/70 transition-colors"
+                    onClick={() => {
+                      // Create random vibrant colors but with low opacity
+                      const generateColor = () => {
+                        const hue = Math.floor(Math.random() * 360);
+                        const opacity = Math.random() * 0.08 + 0.02; // Between 0.02 and 0.1
+                        return `hsla(${hue}, 70%, 60%, ${opacity})`;
+                      };
+                      
+                      // Set new random colors
+                      document.documentElement.style.setProperty('--bg-animation-color-1', generateColor());
+                      document.documentElement.style.setProperty('--bg-animation-color-2', generateColor());
+                      document.documentElement.style.setProperty('--bg-animation-color-3', generateColor());
+                      
+                      // Show feedback toast
+                      toast({
+                        title: "Background updated!",
+                        description: "Animation colors have been randomized",
+                      });
+                    }}
+                  >
+                    <div className="relative w-4 h-4">
+                      <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500 opacity-30" style={{ animationDuration: '3s' }}></span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path></svg>
+                    </div>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm">Randomize background colors</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           
           <div className="text-center pt-8 sm:pt-2">

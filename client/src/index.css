@@ -83,6 +83,99 @@
   }
 }
 
+/* Customizable background animation */
+:root {
+  --bg-animation-color-1: rgba(99, 102, 241, 0.05);  /* Primary color (indigo) */
+  --bg-animation-color-2: rgba(139, 92, 246, 0.05);  /* Secondary color (purple) */
+  --bg-animation-color-3: rgba(236, 72, 153, 0.05);  /* Accent color (pink) */
+  --bg-animation-speed: 20s;                         /* Animation speed (lower = faster) */
+  --bg-animation-blur: 60px;                         /* Blur amount for the shapes */
+  --bg-animation-size: 25%;                          /* Size of the animated elements */
+}
+
+/* Animation container that covers the whole screen */
+.bg-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Animated background shapes */
+.bg-animation-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(var(--bg-animation-blur));
+  opacity: 0.8;
+}
+
+.bg-animation-shape:nth-child(1) {
+  width: var(--bg-animation-size);
+  height: var(--bg-animation-size);
+  background-color: var(--bg-animation-color-1);
+  top: 20%;
+  left: 10%;
+  animation: floatAnimation1 calc(var(--bg-animation-speed) * 1.2) infinite alternate;
+}
+
+.bg-animation-shape:nth-child(2) {
+  width: calc(var(--bg-animation-size) * 1.3);
+  height: calc(var(--bg-animation-size) * 1.3);
+  background-color: var(--bg-animation-color-2);
+  top: 50%;
+  right: 15%;
+  animation: floatAnimation2 var(--bg-animation-speed) infinite alternate;
+}
+
+.bg-animation-shape:nth-child(3) {
+  width: calc(var(--bg-animation-size) * 0.8);
+  height: calc(var(--bg-animation-size) * 0.8);
+  background-color: var(--bg-animation-color-3);
+  bottom: 15%;
+  left: 30%;
+  animation: floatAnimation3 calc(var(--bg-animation-speed) * 0.8) infinite alternate;
+}
+
+/* Keyframes for the different floating animations */
+@keyframes floatAnimation1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(10%, 10%) scale(1.2);
+  }
+}
+
+@keyframes floatAnimation2 {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  100% {
+    transform: translate(-10%, 5%) rotate(15deg);
+  }
+}
+
+@keyframes floatAnimation3 {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0);
+  }
+  100% {
+    transform: translate(5%, -10%) scale(1.1) rotate(-10deg);
+  }
+}
+
+/* Light mode animation colors */
+body.light-mode {
+  --bg-animation-color-1: rgba(99, 102, 241, 0.08);
+  --bg-animation-color-2: rgba(139, 92, 246, 0.08);
+  --bg-animation-color-3: rgba(236, 72, 153, 0.08);
+  --bg-animation-blur: 80px;
+}
+
 /* Custom animation classes */
 @keyframes fadeIn {
   from {
