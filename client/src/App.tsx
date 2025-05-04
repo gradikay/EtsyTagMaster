@@ -50,9 +50,9 @@ function Router() {
 function App() {
   // You can customize colors here or through a settings interface later
   const [animationColors] = useState({
-    color1: 'rgba(99, 102, 241, 0.05)', // Default indigo color
-    color2: 'rgba(139, 92, 246, 0.05)', // Default purple color
-    color3: 'rgba(236, 72, 153, 0.05)', // Default pink color
+    color1: 'rgba(99, 102, 241, 0.15)', // Default indigo color
+    color2: 'rgba(139, 92, 246, 0.15)', // Default purple color
+    color3: 'rgba(236, 72, 153, 0.15)', // Default pink color
   });
 
   return (

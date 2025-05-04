@@ -240,9 +240,9 @@ export default function Home() {
                     }
                     
                     // Update animation colors for light mode
-                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.08)');
-                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.08)');
-                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.08)');
+                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.2)');
+                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.2)');
+                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.2)');
                   } else {
                     // Reset for dark mode
                     document.body.style.background = "";
@@ -252,9 +252,9 @@ export default function Home() {
                     }
                     
                     // Reset animation colors for dark mode
-                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.05)');
-                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.05)');
-                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.05)');
+                    document.documentElement.style.setProperty('--bg-animation-color-1', 'rgba(99, 102, 241, 0.15)');
+                    document.documentElement.style.setProperty('--bg-animation-color-2', 'rgba(139, 92, 246, 0.15)');
+                    document.documentElement.style.setProperty('--bg-animation-color-3', 'rgba(236, 72, 153, 0.15)');
                   }
                 }}
                 defaultChecked={true}
@@ -269,11 +269,11 @@ export default function Home() {
                   <button 
                     className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/70 text-primary hover:bg-slate-700/70 transition-colors"
                     onClick={() => {
-                      // Create random vibrant colors but with low opacity
+                      // Create random vibrant colors with medium opacity
                       const generateColor = () => {
                         const hue = Math.floor(Math.random() * 360);
-                        const opacity = Math.random() * 0.08 + 0.02; // Between 0.02 and 0.1
-                        return `hsla(${hue}, 70%, 60%, ${opacity})`;
+                        const opacity = Math.random() * 0.15 + 0.15; // Between 0.15 and 0.3
+                        return `hsla(${hue}, 80%, 60%, ${opacity})`;
                       };
                       
                       // Set new random colors
