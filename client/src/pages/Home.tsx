@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { apiRequest } from "@/lib/queryClient";
+import { getApiUrl } from "@/lib/environment";
 import { useLocation } from "wouter";
 
 interface GenerateTagsRequest {
@@ -159,7 +160,7 @@ export default function Home() {
     mutationFn: async (data: GenerateTagsRequest) => {
       const response = await apiRequest({
         method: "POST",
-        url: "/api/generate-tags",
+        url: getApiUrl('generate-tags'),
         body: data,
       });
       return response as GenerateTagsResponse;
