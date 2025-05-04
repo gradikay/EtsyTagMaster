@@ -213,8 +213,8 @@ const TagGenerator = () => {
                   <div>
                     <h4 className="font-semibold text-secondary">Pro Tip</h4>
                     <p className="text-sm text-neutral-dark">
-                      These tags work best when your product title also includes your top 3-5 keywords. 
-                      For even more precise tags and competitive analysis, <a href="#pricing" className="text-primary hover:underline">upgrade to Pro</a>.
+                      These tags work best when your product title also includes your top 3-5 keywords.
+                      Try using more detailed descriptions for even better results.
                     </p>
                   </div>
                 </div>
