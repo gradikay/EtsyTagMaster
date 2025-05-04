@@ -252,15 +252,33 @@ export default function Home() {
                     {tags.map((tag, index) => (
                       <Badge 
                         key={index}
-                        onClick={() => {
+                        onClick={(e) => {
+                          const target = e.currentTarget;
+                          
+                          // Add temporary visual feedback
+                          target.classList.add("tag-copied");
+                          
+                          // Copy tag to clipboard
                           navigator.clipboard.writeText(tag)
                             .then(() => {
+                              // Show more prominent visual indicator of success
+                              const originalContent = target.innerHTML;
+                              target.innerHTML = `<span style="display:flex;align-items:center;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!</span>`;
+                              
+                              // Reset after 1.5 seconds
+                              setTimeout(() => {
+                                target.innerHTML = originalContent;
+                                target.classList.remove("tag-copied");
+                              }, 1500);
+                              
+                              // Still show toast notification
                               toast({
                                 title: "Tag copied!",
                                 description: `"${tag}" copied to clipboard`
                               });
                             })
                             .catch(() => {
+                              target.classList.remove("tag-copied");
                               toast({
                                 title: "Copy failed",
                                 description: "Could not copy tag to clipboard",
@@ -268,7 +286,7 @@ export default function Home() {
                               });
                             });
                         }}
-                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation cursor-pointer active:scale-95 transition-transform copy-tag-badge"
+                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation cursor-pointer active:scale-95 transition-all copy-tag-badge"
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {tag}

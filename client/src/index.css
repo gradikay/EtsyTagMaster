@@ -248,4 +248,13 @@
   .copy-tag-badge:active::before {
     background: rgba(255, 255, 255, 0.2);
   }
+  
+  /* Tag copied animation */
+  .tag-copied {
+    background: linear-gradient(90deg, #10b981 0%, #6366f1 100%) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
 }
