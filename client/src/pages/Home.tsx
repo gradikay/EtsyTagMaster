@@ -3,7 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Sparkles, RefreshCcw, Link as LinkIcon, Copy, Moon, Sun } from "lucide-react";
+import { 
+  Sparkles, RefreshCcw, Link as LinkIcon, Copy, Moon, Sun,
+  GemIcon, ShirtIcon, HomeIcon, PaintbrushIcon, UmbrellaIcon, ScissorsIcon, 
+  GamepadIcon, Clock8Icon
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -294,22 +298,90 @@ export default function Home() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-sm sm:text-base">Category</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select 
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                            }} 
+                            defaultValue={field.value}
+                          >
                             <FormControl>
                               <SelectTrigger className="bg-slate-800/70 border-slate-600 h-12 text-base">
-                                <SelectValue placeholder="Select category" />
+                                <SelectValue placeholder="Select category">
+                                  {field.value && (
+                                    <div className="flex items-center gap-2">
+                                      {field.value === "jewelry" && <GemIcon className="w-4 h-4 text-indigo-400" />}
+                                      {field.value === "clothing" && <ShirtIcon className="w-4 h-4 text-blue-400" />}
+                                      {field.value === "home_decor" && <HomeIcon className="w-4 h-4 text-emerald-400" />}
+                                      {field.value === "art" && <PaintbrushIcon className="w-4 h-4 text-pink-400" />}
+                                      {field.value === "accessories" && <UmbrellaIcon className="w-4 h-4 text-yellow-400" />}
+                                      {field.value === "craft_supplies" && <ScissorsIcon className="w-4 h-4 text-red-400" />}
+                                      {field.value === "toys_games" && <GamepadIcon className="w-4 h-4 text-purple-400" />}
+                                      {field.value === "vintage" && <Clock8Icon className="w-4 h-4 text-amber-400" />}
+                                      <span>
+                                        {field.value === "jewelry" && "Jewelry"}
+                                        {field.value === "clothing" && "Clothing"}
+                                        {field.value === "home_decor" && "Home Decor"}
+                                        {field.value === "art" && "Art"}
+                                        {field.value === "accessories" && "Accessories"}
+                                        {field.value === "craft_supplies" && "Craft Supplies"}
+                                        {field.value === "toys_games" && "Toys & Games"}
+                                        {field.value === "vintage" && "Vintage"}
+                                      </span>
+                                    </div>
+                                  )}
+                                </SelectValue>
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent 
                               className="light-mode-select bg-slate-700 border-slate-600 text-white text-base SelectContent">
-                              <SelectItem value="jewelry">Jewelry</SelectItem>
-                              <SelectItem value="clothing">Clothing</SelectItem>
-                              <SelectItem value="home_decor">Home Decor</SelectItem>
-                              <SelectItem value="art">Art</SelectItem>
-                              <SelectItem value="accessories">Accessories</SelectItem>
-                              <SelectItem value="craft_supplies">Craft Supplies</SelectItem>
-                              <SelectItem value="toys_games">Toys & Games</SelectItem>
-                              <SelectItem value="vintage">Vintage</SelectItem>
+                              <SelectItem value="jewelry" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <GemIcon className="w-4 h-4 text-indigo-400" />
+                                  <span>Jewelry</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="clothing" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <ShirtIcon className="w-4 h-4 text-blue-400" />
+                                  <span>Clothing</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="home_decor" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <HomeIcon className="w-4 h-4 text-emerald-400" />
+                                  <span>Home Decor</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="art" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <PaintbrushIcon className="w-4 h-4 text-pink-400" />
+                                  <span>Art</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="accessories" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <UmbrellaIcon className="w-4 h-4 text-yellow-400" />
+                                  <span>Accessories</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="craft_supplies" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <ScissorsIcon className="w-4 h-4 text-red-400" />
+                                  <span>Craft Supplies</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="toys_games" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <GamepadIcon className="w-4 h-4 text-purple-400" />
+                                  <span>Toys & Games</span>
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="vintage" className="flex items-center">
+                                <div className="flex items-center gap-2">
+                                  <Clock8Icon className="w-4 h-4 text-amber-400" />
+                                  <span>Vintage</span>
+                                </div>
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage className="text-sm" />
