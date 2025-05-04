@@ -45,20 +45,6 @@ You can try the application here: [Etsy SEO Tag Generator](https://etsy-tag-gene
   - RESTful API architecture
   - Intelligent tag generation algorithm
 
-## 📁 Static Version
-
-A completely offline, static HTML/CSS/JavaScript version of the application is available in the `/static` directory. This version:
-
-- Works 100% offline with no server or dependencies
-- Includes all core features of the main application
-- Runs in any modern web browser by simply opening the HTML file
-- Generates tags entirely client-side with JavaScript
-
-To use the static version:
-1. Navigate to the `/static` directory
-2. Open `index.html` in any web browser
-3. No installation, servers, or internet connection required!
-
 ## 🛠️ Development Setup
 
 ### Prerequisites
@@ -95,16 +81,6 @@ To use the static version:
 The application can be configured through the following environment variables:
 
 - `PORT`: The port on which the server runs (default: 5000)
-
-## 🎨 Customization
-
-For detailed instructions on how to customize the colors and text of this application, see the [Customization Guide](./CUSTOMIZATION_GUIDE.md).
-
-You can modify:
-- Color schemes (gradients, backgrounds, UI elements)
-- Text content (headings, labels, button text)
-- UI elements (icons, animations)
-- Responsive design settings
 
 ## 🤝 Contributing
 
