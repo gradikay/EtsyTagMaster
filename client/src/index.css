@@ -222,6 +222,46 @@
     overscroll-behavior: contain;
   }
   
+  /* Enhance form elements for mobile */
+  .tag-container {
+    max-height: 250px !important; /* Shorter for mobile */
+    padding: 0.5rem !important;
+  }
+  
+  /* Increase spacing for better touch targets */
+  .tag-container > * {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Make sliders easier to use on mobile */
+  [role="slider"] {
+    height: 24px !important;
+  }
+  
+  /* Increase tag size for better tapping */
+  .copy-tag-badge {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.95rem !important;
+    margin: 0.35rem !important;
+  }
+  
+  /* Add clear touch feedback */
+  .copy-tag-badge:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s ease-out !important;
+    background-color: rgba(99, 102, 241, 0.3) !important;
+  }
+  
+  /* Improve mobile form layout */
+  form {
+    padding: 0.25rem !important;
+  }
+  
+  /* Stack buttons properly on mobile */
+  .flex-wrap {
+    gap: 0.5rem !important;
+  }
+  
   /* Clickable tag styling */
   .copy-tag-badge {
     position: relative;
@@ -257,6 +297,11 @@
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
   }
+  
+  /* Fixed mobile bottom spacing */
+  .min-h-screen {
+    padding-bottom: 2rem !important;
+  }
 }
 
 /* Custom scrollbar for tag container */
@@ -288,4 +333,36 @@
 /* Select items in dropdown */
 .SelectItem {
   color: white;
+}
+
+/* Ultra small mobile screens */
+@media (max-width: 375px) {
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  .copy-tag-badge {
+    padding: 0.5rem !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Further reduce paddings */
+  .p-4, .px-4, .py-4 {
+    padding: 0.75rem !important;
+  }
+  
+  /* Make sure buttons are still readable */
+  button {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Ensure toast messages fit on small screens */
+  [role="status"] {
+    max-width: 95vw !important;
+    font-size: 0.875rem !important;
+  }
 }

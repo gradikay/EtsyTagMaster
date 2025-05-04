@@ -172,7 +172,7 @@ export default function Home() {
               </h2>
 
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6 touch-scroll">
                   <FormField
                     control={form.control}
                     name="description"
@@ -334,7 +334,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="flex flex-wrap gap-2 max-h-[350px] overflow-y-auto p-1 tag-container">
+                  <div className="flex flex-wrap gap-2 sm:gap-3 max-h-[350px] overflow-y-auto p-1 sm:p-2 tag-container">
                     {tags.map((tag, index) => (
                       <Badge 
                         key={index}
@@ -372,7 +372,7 @@ export default function Home() {
                               });
                             });
                         }}
-                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation cursor-pointer active:scale-95 transition-all copy-tag-badge"
+                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-2 sm:py-1.5 text-sm sm:text-sm touch-manipulation cursor-pointer active:scale-95 transition-all copy-tag-badge"
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {tag}
@@ -384,7 +384,7 @@ export default function Home() {
                   <div className="mt-4 flex flex-wrap gap-3">
                     <Button
                       size="sm"
-                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto"
+                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto active:scale-95 transition-transform"
                       onClick={() => {
                         navigator.clipboard.writeText(tags.join(', '))
                           .then(() => {
@@ -401,13 +401,14 @@ export default function Home() {
                             });
                           });
                       }}
+                      style={{ WebkitTapHighlightColor: 'transparent' }}
                     >
                       <Copy className="mr-2 h-4 w-4" /> Copy All Tags
                     </Button>
                     
                     <Button
                       size="sm"
-                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto"
+                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto active:scale-95 transition-transform"
                       onClick={() => {
                         // Get the current URL with query parameters
                         const shareableUrl = window.location.href;
@@ -428,6 +429,7 @@ export default function Home() {
                             });
                           });
                       }}
+                      style={{ WebkitTapHighlightColor: 'transparent' }}
                     >
                       <LinkIcon className="mr-2 h-4 w-4" /> Copy Shareable Link
                     </Button>
