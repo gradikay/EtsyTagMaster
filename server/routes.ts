@@ -21,17 +21,40 @@ function generateTags(description: string, category?: string, style?: string): s
   
   // Extract single words (excluding common words)
   const commonWords = ['a', 'the', 'and', 'or', 'but', 'for', 'with', 'in', 'on', 'at', 'to', 'of', 'is', 'are', 'was', 'were', 'be', 'this', 'that', 'these', 'those', 'it', 'they', 'them', 'their', 'there', 'here', 'when', 'where', 'why', 'how', 'which', 'who', 'whom'];
+  // Get all meaningful single words
   const singleWords = words.filter(word => !commonWords.includes(word) && word.length > 3);
   
-  // Extract phrases (2-3 words)
+  // Extract more aggressive word combinations to get more tags:
+  
+  // 2-word phrases (all combinations)
   for (let i = 0; i < words.length - 1; i++) {
-    if (!commonWords.includes(words[i])) {
+    if (!commonWords.includes(words[i]) && words[i].length > 2) {
+      // Create more 2-word phrases with adjacent words
       phrases.push(`${words[i]} ${words[i+1]}`);
-      if (i < words.length - 2) {
-        phrases.push(`${words[i]} ${words[i+1]} ${words[i+2]}`);
-      }
     }
   }
+  
+  // 3-word phrases
+  for (let i = 0; i < words.length - 2; i++) {
+    if (!commonWords.includes(words[i]) && words[i].length > 2) {
+      phrases.push(`${words[i]} ${words[i+1]} ${words[i+2]}`);
+    }
+  }
+  
+  // Key phrases extraction - look for descriptive combinations
+  const descriptiveWords = ['handmade', 'custom', 'unique', 'vintage', 'artisan', 'natural', 'organic', 'eco', 'rustic', 'modern', 'bohemian', 'minimalist', 'colorful', 'wooden', 'ceramic', 'metal', 'leather', 'cotton', 'glass', 'beaded', 'recycled', 'sustainable', 'personalized'];
+  
+  // Find descriptive words in the text and create combinations
+  descriptiveWords.forEach(descriptive => {
+    if (lowerDesc.includes(descriptive)) {
+      // Add combinations with significant nouns from the description
+      singleWords.forEach(word => {
+        if (word.length > 3 && !commonWords.includes(word)) {
+          phrases.push(`${descriptive} ${word}`);
+        }
+      });
+    }
+  });
   
   // Combine all potential keywords
   let potentialTags = [...singleWords, ...phrases];
@@ -128,47 +151,15 @@ function generateTags(description: string, category?: string, style?: string): s
   // Combine all tags
   const allTags = [...potentialTags, ...commonTags];
   
-  // Deduplicate, filter by length, and get exactly 13 tags (Etsy max)
+  // Deduplicate and clean tags, returning ALL possible matches from the description
   const uniqueTagsSet = new Set(allTags);
-  let uniqueTags = Array.from(uniqueTagsSet)
+  const uniqueTags = Array.from(uniqueTagsSet)
     // Remove any commas or slashes, and ensure appropriate length
     .map(tag => tag.replace(/[,\/\\]/g, '').trim())
-    .filter(tag => tag.length > 0 && tag.length <= 20); // Etsy tag length limit
-  
-  // Ensure we always have 13 tags by adding additional tags if needed
-  if (uniqueTags.length < 13) {
-    // Add more generic, high-performing Etsy tags as backup
-    const fallbackTags = [
-      'handmade item',
-      'gift under 50',
-      'gift under 25',
-      'gift under 100',
-      'shop small',
-      'small business',
-      'handmade gift',
-      'unique present',
-      'gift idea',
-      'gift for friend',
-      'special occasion',
-      'thoughtful gift',
-      'etsy find',
-      'new arrival',
-      'bestseller',
-      'trending now',
-      'limited edition',
-      'made with love',
-      'handcrafted item'
-    ];
-    
-    // Filter out any that are already in our tags
-    const additionalTags = fallbackTags.filter(tag => !uniqueTags.includes(tag));
-    
-    // Add as many as needed to reach exactly 13 tags
-    uniqueTags = [...uniqueTags, ...additionalTags.slice(0, 13 - uniqueTags.length)];
-  }
-  
-  // Final trim to exactly 13 tags
-  uniqueTags = uniqueTags.slice(0, 13);
+    // Ensure tags are reasonable length and not empty
+    .filter(tag => tag.length > 0 && tag.length <= 80)
+    // Sort by length (shortest first) for better readability
+    .sort((a, b) => a.length - b.length);
   
   return uniqueTags;
 }

@@ -101,7 +101,7 @@ export default function Home() {
       
       toast({
         title: "Tags generated successfully!",
-        description: `Generated all 13 maximum tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
+        description: `Generated ${data.tags.length} tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
       });
     },
     onError: (error) => {
@@ -369,8 +369,13 @@ export default function Home() {
                     )}
                     
                     <p className="text-sm text-slate-400">
-                      <span className="font-medium text-primary-foreground">Always generating all 13 tags</span> - the maximum allowed by Etsy for optimal listing visibility.
+                      <span className="font-medium text-primary-foreground">Generating as many tags as possible</span> from your description. Etsy allows a maximum of 13 tags per listing.
                     </p>
+                    {tags.length > 13 && (
+                      <p className="text-xs text-amber-400 mt-1">
+                        <span className="font-medium">Note:</span> We found {tags.length} potential tags! You'll need to choose your favorite 13 for your Etsy listing.
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
