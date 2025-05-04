@@ -22,15 +22,44 @@ function generateTags(description: string, category?: string, style?: string): s
   // Extract single words (excluding common words)
   const commonWords = ['a', 'the', 'and', 'or', 'but', 'for', 'with', 'in', 'on', 'at', 'to', 'of', 'is', 'are', 'was', 'were', 'be', 'this', 'that', 'these', 'those', 'it', 'they', 'them', 'their', 'there', 'here', 'when', 'where', 'why', 'how', 'which', 'who', 'whom'];
   // Get all meaningful single words
-  const singleWords = words.filter(word => !commonWords.includes(word) && word.length > 3);
+  const singleWords = words.filter(word => !commonWords.includes(word) && word.length > 2);
   
   // Extract more aggressive word combinations to get more tags:
   
-  // 2-word phrases (all combinations)
+  // Add key nouns and adjectives specifically
+  const nouns: string[] = [];
+  const adjectives: string[] = [];
+  
+  // Common adjectives that might be in product descriptions
+  const potentialAdjectives = ['beautiful', 'elegant', 'rustic', 'vintage', 'modern', 'handmade', 'handcrafted', 'custom', 'unique', 'colorful', 'natural', 'organic', 'bohemian', 'minimalist', 'traditional', 'contemporary', 'decorative', 'functional', 'premium', 'luxury', 'affordable', 'exquisite', 'perfect', 'sturdy', 'lightweight', 'durable', 'stylish', 'trendy', 'high-quality', 'quality', 'wooden', 'metal', 'ceramic', 'glass', 'cotton', 'linen', 'leather', 'personalized', 'special', 'festive', 'seasonal', 'holiday'];
+  
+  // Find all adjectives in the description
+  singleWords.forEach(word => {
+    if (potentialAdjectives.includes(word.toLowerCase())) {
+      adjectives.push(word);
+    } else {
+      // Assume the rest are potential nouns
+      nouns.push(word);
+    }
+  });
+  
+  // Create adjective-noun combinations for more tag options
+  adjectives.forEach(adj => {
+    nouns.forEach(noun => {
+      phrases.push(`${adj} ${noun}`);
+    });
+  });
+  
+  // 2-word phrases (all combinations and variations)
   for (let i = 0; i < words.length - 1; i++) {
     if (!commonWords.includes(words[i]) && words[i].length > 2) {
-      // Create more 2-word phrases with adjacent words
+      // Create 2-word phrases with adjacent words
       phrases.push(`${words[i]} ${words[i+1]}`);
+      
+      // Create 2-word phrases with non-adjacent words for more combinations
+      if (i < words.length - 2) {
+        phrases.push(`${words[i]} ${words[i+2]}`);
+      }
     }
   }
   
@@ -38,6 +67,15 @@ function generateTags(description: string, category?: string, style?: string): s
   for (let i = 0; i < words.length - 2; i++) {
     if (!commonWords.includes(words[i]) && words[i].length > 2) {
       phrases.push(`${words[i]} ${words[i+1]} ${words[i+2]}`);
+    }
+  }
+  
+  // Extract noun phrases by combining words with common joining terms
+  for (let i = 0; i < nouns.length; i++) {
+    for (let j = i + 1; j < nouns.length; j++) {
+      phrases.push(`${nouns[i]} ${nouns[j]}`);
+      phrases.push(`${nouns[i]} and ${nouns[j]}`);
+      phrases.push(`${nouns[i]} for ${nouns[j]}`);
     }
   }
   
@@ -90,23 +128,25 @@ function generateTags(description: string, category?: string, style?: string): s
   // Add material-related tags if detected in description
   const materials = ['wood', 'wooden', 'metal', 'ceramic', 'glass', 'cotton', 'linen', 'silk', 'leather', 'paper', 'plastic', 'stone', 'silver', 'gold', 'brass', 'copper', 'steel', 'bronze', 'iron', 'clay', 'porcelain', 'fabric', 'wool', 'acrylic', 'resin'];
   
+  // Add ALL materials found in the description
   for (const material of materials) {
     if (lowerDesc.includes(material)) {
       potentialTags.push(material);
       potentialTags.push(`${material} ${category || 'item'}`);
       potentialTags.push(`${material} gift`);
-      break; // Only add one material to avoid tag redundancy
+      // No break - we want ALL matches
     }
   }
   
   // Add occasion-related tags if detected in description
   const occasions = ['wedding', 'birthday', 'anniversary', 'christmas', 'holiday', 'halloween', 'thanksgiving', 'easter', 'mothers day', 'fathers day', 'valentines', 'graduation', 'baby shower', 'retirement', 'housewarming'];
   
+  // Add ALL occasions found in the description
   for (const occasion of occasions) {
     if (lowerDesc.includes(occasion) || lowerDesc.includes(occasion.replace(' ', ''))) {
       potentialTags.push(`${occasion} gift`);
       potentialTags.push(`${occasion} present`);
-      break; // Only add one occasion to avoid tag redundancy
+      // No break - we want ALL matches
     }
   }
   
@@ -174,7 +214,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const tags = generateTags(description, category, style);
       
       // Calculate a more accurate relevance score based on several factors
-      // - Number of tags generated (max 13)
+      // - Number of tags generated (unlimited)
       // - Presence of category-specific tags
       // - Presence of specific keywords from the description
       // - Variety of tag types (single words, phrases, etc.)
@@ -187,15 +227,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const descWords = description.toLowerCase().split(/\s+/);
       const keywordMatches = descWords.filter((word: string) => word.length > 4 && tags.some(tag => tag.includes(word))).length;
       
-      // Calculate score based on these factors (weighted)
+      // Calculate score based on these factors (weighted for many tags)
       const relevanceScore = Math.min(
         Math.round(
-          (tagCount / 13) * 40 +         // 40% weight for tag count
-          (tagVariety / 3) * 20 +        // 20% weight for variety of tag types
-          (categoryMatches / 5) * 20 +   // 20% weight for category relevance
-          (keywordMatches / 10) * 20     // 20% weight for keyword matching
+          Math.min(tagCount / 25, 1) * 40 +    // 40% weight for tag count (up to 25 tags gets full score) 
+          Math.min(tagVariety / 5, 1) * 20 +   // 20% weight for variety of tag types
+          Math.min(categoryMatches / 8, 1) * 20 +  // 20% weight for category relevance
+          Math.min(keywordMatches / 15, 1) * 20    // 20% weight for keyword matching
         ), 
-        99                               // Max score is 99
+        99                                 // Max score is 99
       );
       
       res.json({
