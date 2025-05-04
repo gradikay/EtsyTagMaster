@@ -255,15 +255,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const descWords = description.toLowerCase().split(/\s+/);
       const keywordMatches = descWords.filter((word: string) => word.length > 4 && tags.some(tag => tag.includes(word))).length;
       
-      // Calculate score based on these factors (weighted for many tags)
+      // Calculate score based on these factors with a much higher base score
+      // This ensures we always start with a high score (80) and only adjust slightly based on factors
+      const baseScore = 80; // Start with a high base score
+      const maxScore = 99;
+      
+      // Calculate adjustment factors (these will be much smaller now)
+      const tagCountScore = Math.min(tagCount / 10, 1) * 6;  // Up to 6 points for tag count
+      const tagVarietyScore = Math.min(tagVariety / 3, 1) * 4; // Up to 4 points for variety
+      const categoryScore = category ? Math.min(categoryMatches / 3, 1) * 5 : 5; // 5 points for category
+      const keywordScore = Math.min(keywordMatches / 5, 1) * 5; // Up to 5 points for keywords
+      
+      // Calculate final score: base score + adjustments, never exceeding maxScore
       const relevanceScore = Math.min(
-        Math.round(
-          Math.min(tagCount / 25, 1) * 40 +    // 40% weight for tag count (up to 25 tags gets full score) 
-          Math.min(tagVariety / 5, 1) * 20 +   // 20% weight for variety of tag types
-          Math.min(categoryMatches / 8, 1) * 20 +  // 20% weight for category relevance
-          Math.min(keywordMatches / 15, 1) * 20    // 20% weight for keyword matching
-        ), 
-        99                                 // Max score is 99
+        Math.round(baseScore + tagCountScore + tagVarietyScore + categoryScore + keywordScore), 
+        maxScore
       );
       
       res.json({

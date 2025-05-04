@@ -512,9 +512,10 @@ export default function Home() {
                           <p className="font-medium mb-1">Relevance Score Explained</p>
                           <p className="text-sm">This score (1-99) indicates how well your generated tags match your product description and category.</p>
                           <ul className="text-xs mt-2 space-y-1 text-slate-300">
-                            <li>• <span className="text-red-400">1-40:</span> Poor match, consider improving description</li>
-                            <li>• <span className="text-yellow-400">41-70:</span> Good match, will help with visibility</li>
-                            <li>• <span className="text-green-400">71+:</span> Excellent match, optimal for SEO</li>
+                            <li>• <span className="text-green-400">95+:</span> Perfect match, ideal for SEO</li>
+                            <li>• <span className="text-emerald-400">90-94:</span> Excellent match, highly optimized</li>
+                            <li>• <span className="text-yellow-400">80-89:</span> Very good match, well-optimized</li>
+                            <li>• <span className="text-orange-400">&lt;80:</span> Good match, consider adding more details</li>
                           </ul>
                         </TooltipContent>
                       </Tooltip>
