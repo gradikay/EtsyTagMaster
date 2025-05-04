@@ -124,6 +124,8 @@
   border: none !important;
   position: relative;
   overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .flash-button::before {
@@ -138,9 +140,27 @@
   opacity: 0.8;
 }
 
-.flash-button:hover::before {
+.flash-button:hover::before,
+.flash-button:focus::before {
   animation-duration: 1s;
   opacity: 1;
+}
+
+/* Add active state for touch devices */
+.flash-button:active {
+  transform: scale(0.98);
+}
+
+/* Mobile touch optimizations */
+@media (hover: none) {
+  .flash-button::before {
+    opacity: 0.9;
+  }
+  
+  .flash-button:active::before {
+    opacity: 1;
+    animation-duration: 1s;
+  }
 }
 
 /* Glass morphism effects */
@@ -149,20 +169,56 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Custom scrollbar - only on desktop */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.5);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.7);
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.3);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.7);
+/* Mobile-specific enhancements */
+@media (max-width: 767px) {
+  /* Optimized touch targets */
+  button, 
+  [role="button"],
+  input,
+  select,
+  a {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+    min-width: 44px;
+  }
+  
+  /* Improve form interactions */
+  input, textarea, select, button {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Add subtle feedback for touch interactions */
+  .touch-feedback {
+    transition: opacity 0.15s ease;
+  }
+  
+  .touch-feedback:active {
+    opacity: 0.7;
+  }
+  
+  /* Improve scrolling performance */
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }

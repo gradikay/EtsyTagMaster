@@ -75,60 +75,61 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        {/* Header */}
-        <header className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
+        {/* Header - More responsive text sizing */}
+        <header className="text-center mb-8 sm:mb-12 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
             Etsy SEO Tag Generator
           </h1>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto px-2">
             Create optimal tags for your Etsy listings and boost your shop's visibility
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Mobile-first grid system with order changes on larger screens */}
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-5 sm:gap-8">
           {/* Tag Generator Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-700 rounded-xl p-6 mb-8 shadow-lg glass-effect animate-fade-in">
-              <h2 className="text-2xl font-semibold mb-6 flex items-center">
+          <div className="lg:col-span-2 order-1">
+            <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-700 rounded-xl p-4 sm:p-6 mb-5 sm:mb-8 shadow-lg glass-effect animate-fade-in">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 flex items-center">
                 <Sparkles className="text-primary mr-2 h-5 w-5" />
                 Generate Your Tags
               </h2>
 
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
                   <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Product Description</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Product Description</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Describe your product in detail..."
-                            className="bg-slate-800/70 border-slate-600 min-h-[120px]"
+                            className="bg-slate-800/70 border-slate-600 min-h-[100px] sm:min-h-[120px] text-base"
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-sm" />
                       </FormItem>
                     )}
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <FormField
                       control={form.control}
                       name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Category</FormLabel>
+                          <FormLabel className="text-sm sm:text-base">Category</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="bg-slate-800/70 border-slate-600">
+                              <SelectTrigger className="bg-slate-800/70 border-slate-600 h-12 text-base">
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-slate-800 border-slate-600">
+                            <SelectContent className="bg-slate-800 border-slate-600 text-base">
                               <SelectItem value="jewelry">Jewelry</SelectItem>
                               <SelectItem value="clothing">Clothing</SelectItem>
                               <SelectItem value="home_decor">Home Decor</SelectItem>
@@ -139,7 +140,7 @@ export default function Home() {
                               <SelectItem value="vintage">Vintage</SelectItem>
                             </SelectContent>
                           </Select>
-                          <FormMessage />
+                          <FormMessage className="text-sm" />
                         </FormItem>
                       )}
                     />
@@ -149,35 +150,36 @@ export default function Home() {
                       name="style"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Style (Optional)</FormLabel>
+                          <FormLabel className="text-sm sm:text-base">Style (Optional)</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="e.g. Bohemian, Minimalist, Vintage"
-                              className="bg-slate-800/70 border-slate-600"
+                              className="bg-slate-800/70 border-slate-600 h-12 text-base"
                               {...field}
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-sm" />
                         </FormItem>
                       )}
                     />
                   </div>
 
-                  <div className="flex justify-center">
+                  <div className="flex justify-center pt-2">
                     <Button 
                       type="submit" 
                       disabled={generateTagsMutation.isPending}
-                      className="py-6 px-10 text-lg font-medium relative flash-button text-white"
+                      className="py-4 sm:py-6 px-8 sm:px-10 text-base sm:text-lg font-medium relative flash-button text-white touch-manipulation"
+                      style={{ WebkitTapHighlightColor: 'transparent' }}
                     >
                       <span className="relative z-10 flex items-center justify-center">
                         {generateTagsMutation.isPending ? (
                           <>
-                            <RefreshCcw className="mr-2 h-5 w-5 animate-spin" />
+                            <RefreshCcw className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                             Generating...
                           </>
                         ) : (
                           <>
-                            <Sparkles className="mr-2 h-5 w-5" />
+                            <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                             Generate Tags
                           </>
                         )}
@@ -189,13 +191,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Results Section */}
-          <div className="lg:col-span-1">
-            <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg h-full glass-effect animate-fade-in">
-              <h2 className="text-2xl font-semibold mb-6">Generated Tags</h2>
+          {/* Results Section - On mobile it's below the form, on desktop it's alongside */}
+          <div className="lg:col-span-1 order-2">
+            <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-700 rounded-xl p-4 sm:p-6 shadow-lg h-full glass-effect animate-fade-in">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Generated Tags</h2>
               
               {tags.length === 0 ? (
-                <div className="text-center py-12 text-slate-400">
+                <div className="text-center py-8 sm:py-12 text-slate-400">
                   <p>Your generated tags will appear here</p>
                   <p className="text-sm mt-2">Fill out the form and click "Generate Tags"</p>
                 </div>
@@ -205,14 +207,41 @@ export default function Home() {
                     {tags.map((tag, index) => (
                       <Badge 
                         key={index} 
-                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1"
+                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation"
+                        style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {tag}
                       </Badge>
                     ))}
                   </div>
                   
-                  <div className="mt-6 pt-4 border-t border-slate-700">
+                  {/* Copy tags button for mobile convenience */}
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Button
+                      size="sm"
+                      className="bg-slate-700 hover:bg-slate-600 text-white text-sm py-2 px-4 touch-manipulation w-full sm:w-auto"
+                      onClick={() => {
+                        navigator.clipboard.writeText(tags.join(', '))
+                          .then(() => {
+                            toast({
+                              title: "Tags copied!",
+                              description: "All tags copied to clipboard"
+                            });
+                          })
+                          .catch(() => {
+                            toast({
+                              title: "Copy failed",
+                              description: "Could not copy to clipboard",
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                    >
+                      <RefreshCcw className="mr-2 h-4 w-4" /> Copy All Tags
+                    </Button>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t border-slate-700">
                     <p className="text-sm text-slate-400">
                       You can use up to 13 tags per Etsy listing. Choose the most relevant ones for your product.
                     </p>
