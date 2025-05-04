@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { 
   Sparkles, RefreshCcw, Link as LinkIcon, Copy, Moon, Sun,
   GemIcon, ShirtIcon, HomeIcon, PaintbrushIcon, UmbrellaIcon, ScissorsIcon, 
-  GamepadIcon, Clock8Icon
+  GamepadIcon, Clock8Icon, InfoIcon
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation } from "wouter";
 
@@ -494,7 +495,33 @@ export default function Home() {
           {/* Results Section - On mobile it's below the form, on desktop it's alongside */}
           <div className="lg:col-span-1 order-2">
             <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-700 rounded-xl p-4 sm:p-6 shadow-lg h-full glass-effect animate-fade-in">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Generated Tags</h2>
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h2 className="text-xl sm:text-2xl font-semibold">Generated Tags</h2>
+                
+                {relevanceScore > 0 && (
+                  <div className="flex items-center gap-1.5">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center gap-1.5 bg-indigo-900/50 px-3 py-1 rounded-full text-sm cursor-help">
+                            <span className="font-medium">Score: {relevanceScore}/99</span>
+                            <InfoIcon className="h-4 w-4 text-indigo-300" />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs bg-slate-800 border-slate-700 text-white p-3">
+                          <p className="font-medium mb-1">Relevance Score Explained</p>
+                          <p className="text-sm">This score (1-99) indicates how well your generated tags match your product description and category.</p>
+                          <ul className="text-xs mt-2 space-y-1 text-slate-300">
+                            <li>• <span className="text-red-400">1-40:</span> Poor match, consider improving description</li>
+                            <li>• <span className="text-yellow-400">41-70:</span> Good match, will help with visibility</li>
+                            <li>• <span className="text-green-400">71+:</span> Excellent match, optimal for SEO</li>
+                          </ul>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                )}
+              </div>
               
               {tags.length === 0 ? (
                 <div className="text-center py-8 sm:py-12 text-slate-400">
@@ -605,15 +632,6 @@ export default function Home() {
                   </div>
                   
                   <div className="mt-4 pt-4 border-t border-slate-700">
-                    {/* Show relevance score when available */}
-                    {relevanceScore > 0 && (
-                      <div className="mb-2 flex items-center">
-                        <div className="text-sm font-medium">Relevance Score:</div>
-                        <div className="ml-2 px-2 py-0.5 bg-gradient-to-r from-primary/30 to-secondary/30 rounded text-sm">
-                          {relevanceScore.toFixed(1)}/10
-                        </div>
-                      </div>
-                    )}
                     
                     {/* Check if we're viewing shared tags */}
                     {window.location.search.includes('tags=') && (
