@@ -109,11 +109,13 @@ export default function Home() {
       
       // Create a more descriptive success message
       const tagCount = data.tags.length;
-      const etsy13Message = tagCount > 13 ? ` (${tagCount - 13} extra options beyond Etsy's 13-tag limit!)` : '';
+      const totalCount = data.totalAvailableTags || tagCount;
+      const extraTagsMessage = totalCount > tagCount ? ` (${totalCount - tagCount} more available)` : '';
+      const etsy13Message = tagCount > 13 ? ` - ${tagCount - 13} extra beyond Etsy's 13-tag limit!` : '';
       
       toast({
         title: "Tags generated successfully!",
-        description: `Generated ${tagCount} potential tags${etsy13Message} with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
+        description: `Generated ${tagCount} tags${extraTagsMessage}${etsy13Message} with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
       });
     },
     onError: (error) => {
@@ -236,7 +238,7 @@ export default function Home() {
                             max={100} 
                             min={1} 
                             step={1}
-                            onValueChange={(vals) => field.onChange(vals[0])}
+                            onValueChange={(vals: number[]) => field.onChange(vals[0])}
                             className="py-4"
                           />
                         </FormControl>
@@ -408,11 +410,16 @@ export default function Home() {
                     )}
                     
                     <p className="text-sm text-slate-400">
-                      <span className="font-medium text-primary-foreground">Generating as many tags as possible</span> from your description. Etsy allows a maximum of 13 tags per listing.
+                      <span className="font-medium text-primary-foreground">Showing {tags.length} tags</span> from your description. Etsy allows a maximum of 13 tags per listing.
                     </p>
+                    {generateTagsMutation.data?.totalAvailableTags > tags.length && (
+                      <p className="text-xs text-amber-400 mt-1">
+                        <span className="font-medium">Info:</span> {generateTagsMutation.data?.totalAvailableTags - tags.length} more tags available. Adjust the slider to see more options.
+                      </p>
+                    )}
                     {tags.length > 13 && (
                       <p className="text-xs text-amber-400 mt-1">
-                        <span className="font-medium">Note:</span> We found {tags.length} potential tags! You'll need to choose your favorite 13 for your Etsy listing.
+                        <span className="font-medium">Note:</span> You'll need to choose your favorite 13 tags for your Etsy listing.
                       </p>
                     )}
                   </div>
