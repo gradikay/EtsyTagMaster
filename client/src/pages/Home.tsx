@@ -155,9 +155,9 @@ export default function Home() {
       <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
-          <div className="absolute top-0 right-2 flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <Sun className="h-3 w-3 text-slate-400" />
+          <div className="absolute top-1 right-2 sm:top-0 sm:right-2 flex items-center gap-2 z-20">
+            <div className="flex items-center gap-1 p-1 bg-slate-800/70 rounded-full">
+              <Sun className="h-3 w-3 text-yellow-400" />
               <Switch 
                 id="dark-mode" 
                 className="data-[state=checked]:bg-primary"
@@ -224,7 +224,7 @@ export default function Home() {
                                 <SelectValue placeholder="Select category" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-slate-700 border-slate-600 text-white text-base">
+                            <SelectContent className="bg-slate-700 border-slate-600 text-white text-base SelectContent">
                               <SelectItem value="jewelry">Jewelry</SelectItem>
                               <SelectItem value="clothing">Clothing</SelectItem>
                               <SelectItem value="home_decor">Home Decor</SelectItem>
