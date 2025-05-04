@@ -215,7 +215,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white main-container">
+    <div className="min-h-screen text-white main-container">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
@@ -230,21 +230,8 @@ export default function Home() {
                   document.documentElement.classList.toggle('light-mode', !checked);
                   document.body.classList.toggle('light-mode', !checked);
                   
-                  if (!checked) {
-                    // Force the background for light mode
-                    document.body.style.background = "linear-gradient(135deg, #ffffff, #f0f9ff, #e6f7ff)";
-                    const mainContainer = document.querySelector('.main-container');
-                    if (mainContainer) {
-                      mainContainer.setAttribute('style', 'background: none !important');
-                    }
-                  } else {
-                    // Reset for dark mode
-                    document.body.style.background = "";
-                    const mainContainer = document.querySelector('.main-container');
-                    if (mainContainer) {
-                      mainContainer.setAttribute('style', '');
-                    }
-                  }
+                  // With animated background, we don't need to set explicit background colors
+                  // The mode change will be detected by our AnimatedBackground component
                 }}
                 defaultChecked={true}
               />
