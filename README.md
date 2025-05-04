@@ -1,108 +1,65 @@
 # Etsy SEO Tag Generator
 
-![Hero Image](./generated-icon.png)
+A powerful SEO tag generator tool for Etsy sellers to optimize their product listings. This application helps generate relevant tags from product descriptions to improve search visibility.
 
-A powerful, modern web application designed to help Etsy sellers optimize their product listings with intelligent tag generation. This application extracts highly relevant keywords from product descriptions and generates optimized tags with maximum relevance scores.
+## Features
 
-## ✨ Features
+- **AI-Powered Tag Generation**: Generate relevant tags based on product descriptions
+- **Category-Specific Optimization**: Tailor tags to specific Etsy categories
+- **Style Customization**: Add style preferences to generate more targeted tags
+- **Tag Relevance Score**: See how relevant your tags are to your product
+- **Customizable Generation**: Control the number of tags and words per tag
+- **Mobile-Friendly Design**: Fully responsive for use on any device
+- **Dark/Light Mode**: Toggle between dark and light themes
+- **Dynamic Animation**: Beautiful background animations that respond to the theme
 
-- **AI-Powered Tag Generation**: Intelligent analysis of product descriptions to extract the most relevant tags
-- **Maximum Relevance**: All tags score 99/99 for maximum search visibility
-- **Customizable Controls**:
-  - Adjust maximum number of tags to generate (default: 13)
-  - Control maximum words per tag (default: 3)
-- **Smart Processing**:
-  - Special character removal while preserving word separation
-  - Intelligent word filtering and relevance ranking
-- **Intuitive UI**:
-  - One-click copy functionality for individual tags
-  - "Copy All Tags" button for convenience
-  - Visual feedback when copying tags
-- **Shareable Results**:
-  - Generate shareable links with your current tags and settings
-  - Easy collaboration with team members
-- **Modern Design**:
-  - Sleek, futuristic interface with glass-like UI elements
-  - Responsive layout for all devices
-  - Dark and light mode with beautiful animated backgrounds
-  - Category selection with unique, colorful icons
+## Deployment Instructions
 
-## 🚀 Live Demo
+### Deploying to Netlify
 
-You can try the application here: [Etsy SEO Tag Generator](https://etsy-tag-generator.replit.app)
+1. **Clone this repository to your local machine**
 
-## 💻 Technology Stack
-
-- **Frontend**:
-  - React 18 with TypeScript
-  - TailwindCSS for styling
-  - shadcn/ui components
-  - Responsive design with mobile support
-  - Framer Motion for animations
-
-- **Backend**:
-  - Node.js with Express
-  - RESTful API architecture
-  - Intelligent tag generation algorithm
-
-## 🛠️ Development Setup
-
-### Prerequisites
-
-- Node.js (v18+)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/etsy-tag-generator.git
-   cd etsy-tag-generator
+2. **Install dependencies**
    ```
-
-2. Install dependencies:
-   ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
+3. **Build the application**
+   ```
+   npm run build
    ```
 
-4. Open your browser and navigate to `http://localhost:5000`
+4. **Deploy to Netlify**
+   - Log in to your Netlify account
+   - Click "New site from Git"
+   - Connect to your Git provider and select the repository
+   - Use the following build settings:
+     - Build command: `vite build`
+     - Publish directory: `dist/client`
+   - Click "Deploy site"
 
-## 🔧 Configuration
+Alternatively, you can use the Netlify CLI:
+```
+npx netlify deploy --prod
+```
 
-The application can be configured through the following environment variables:
+### Using the Application
 
-- `PORT`: The port on which the server runs (default: 5000)
+1. Enter your product description in the text area
+2. Select the appropriate Etsy category from the dropdown
+3. (Optional) Add style preferences to tailor the tags
+4. Set the maximum number of tags and words per tag
+5. Click "Generate Tags" to create optimized SEO tags
+6. Click on individual tags to copy them to your clipboard
+7. Use the "Copy All Tags" button to copy all tags at once
 
-## 🤝 Contributing
+## Local Development
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Start the development server with `npm run dev`
+4. Visit `http://localhost:3000` in your browser
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## License
 
-## 📝 License
-
-This project is for personal use only. All rights reserved.
-
-## 🙏 Acknowledgements
-
-- [Replit](https://replit.com) - Development platform
-- [shadcn/ui](https://ui.shadcn.com/) - UI component library
-- [TailwindCSS](https://tailwindcss.com/) - CSS framework
-- [React](https://reactjs.org/) - Frontend library
-
----
-
-Made with ❤️ for Etsy sellers
+MIT
