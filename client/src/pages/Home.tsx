@@ -156,8 +156,8 @@ export default function Home() {
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
           <div className="absolute top-1 right-2 sm:top-0 sm:right-2 flex items-center gap-2 z-20">
-            <div className="flex items-center gap-1 p-1 bg-slate-800/70 rounded-full">
-              <Sun className="h-3 w-3 text-yellow-400" />
+            <div className="flex items-center gap-2 p-2 bg-slate-800/70 rounded-full mode-toggle-bg">
+              <Sun className="h-4 w-4 text-yellow-400" />
               <Switch 
                 id="dark-mode" 
                 className="data-[state=checked]:bg-primary"
@@ -169,16 +169,22 @@ export default function Home() {
                   if (!checked) {
                     // Force the background for light mode
                     document.body.style.background = "linear-gradient(135deg, #ffffff, #f0f9ff, #e6f7ff)";
-                    document.querySelector('.main-container').setAttribute('style', 'background: none !important');
+                    const mainContainer = document.querySelector('.main-container');
+                    if (mainContainer) {
+                      mainContainer.setAttribute('style', 'background: none !important');
+                    }
                   } else {
                     // Reset for dark mode
                     document.body.style.background = "";
-                    document.querySelector('.main-container').setAttribute('style', '');
+                    const mainContainer = document.querySelector('.main-container');
+                    if (mainContainer) {
+                      mainContainer.setAttribute('style', '');
+                    }
                   }
                 }}
                 defaultChecked={true}
               />
-              <Moon className="h-3 w-3 text-slate-300" />
+              <Moon className="h-4 w-4 text-slate-300" />
             </div>
           </div>
           

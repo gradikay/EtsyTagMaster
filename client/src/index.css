@@ -352,6 +352,32 @@ body.light-mode .glass-effect {
   box-shadow: 0 4px 20px rgba(186, 230, 253, 0.4);
 }
 
+/* Mode toggle icons */
+body.light-mode .text-yellow-400 {
+  color: #ff9900 !important;
+  filter: drop-shadow(0 0 2px rgba(255, 153, 0, 0.5));
+}
+
+body.light-mode .text-slate-300 {
+  color: #334155 !important;
+}
+
+body.light-mode .mode-toggle-bg {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(147, 197, 253, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.3) !important;
+  padding: 3px 4px !important;
+}
+
+/* Switch track and thumb styling for light mode */
+body.light-mode [data-state="checked"] {
+  background-color: #6366f1 !important;
+}
+
+body.light-mode [data-state="unchecked"] {
+  background-color: #cbd5e1 !important;
+}
+
 body.light-mode h1 {
   background-image: linear-gradient(to right, #6366f1, #8b5cf6, #ec4899);
   background-clip: text;
@@ -386,7 +412,6 @@ body.light-mode [role="combobox"] {
 }
 
 body.light-mode .text-white,
-body.light-mode .text-slate-300,
 body.light-mode .text-slate-400,
 body.light-mode .form-label,
 body.light-mode h2 {
