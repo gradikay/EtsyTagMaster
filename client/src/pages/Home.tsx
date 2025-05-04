@@ -219,7 +219,7 @@ export default function Home() {
       <div className="mx-auto max-w-6xl px-4 py-6 sm:py-12">
         {/* Header - More responsive text sizing */}
         <header className="relative mb-8 sm:mb-12 animate-fade-in">
-          <div className="absolute top-1 right-2 sm:top-0 sm:right-2 flex items-center gap-2 z-20">
+          <div className="fixed top-4 right-4 sm:top-4 sm:right-4 md:absolute md:top-1 md:right-2 flex items-center gap-2 z-20">
             <div className="flex items-center gap-2 p-2 bg-slate-800/70 rounded-full mode-toggle-bg">
               <Sun className="h-4 w-4 text-yellow-400" />
               <Switch 
