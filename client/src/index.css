@@ -579,19 +579,19 @@ body.light-mode .mode-toggle-bg {
   padding: 4px 6px !important;
 }
 
-/* Switch track and thumb styling for light mode */
-body.light-mode [data-state="checked"] {
+/* Switch track and thumb styling for light mode - ONLY for toggle switch */
+body.light-mode .mode-toggle-bg [data-state="checked"] {
   background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
   box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4) !important;
 }
 
-body.light-mode [data-state="unchecked"] {
+body.light-mode .mode-toggle-bg [data-state="unchecked"] {
   background: linear-gradient(to right, #8b5cf6, #ec4899) !important;
   box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4) !important;
 }
 
-/* Thumb styling for both states */
-body.light-mode [data-state] [data-state] {
+/* Thumb styling for both states in toggle only */
+body.light-mode .mode-toggle-bg [data-state] [data-state] {
   background-color: white !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
 }
@@ -710,7 +710,9 @@ body.light-mode * [data-highlighted="true"] {
 }
 
 /* Additional force override for select items */
-body.light-mode [data-radix-select-item] {
+body.light-mode [data-radix-select-item],
+body.light-mode [data-radix-select-item][data-state="unchecked"],
+body.light-mode [data-radix-select-item][data-state="checked"] {
   background-color: white !important;
   color: #1e293b !important;
 }
