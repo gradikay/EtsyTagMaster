@@ -1,26 +1,40 @@
 [build]
-  command = "npm run build"
-  publish = "dist/public"
+  command = "REACT_APP_STAGE=dev npm run build"
+  publish = "build"
   functions = "netlify/functions"
 
-# Handle SPA routing by redirecting all paths to index.html
+# Production context
+[context.production]
+  command = "REACT_APP_STAGE=prod npm run build"
+
+# Deploy Preview context
+[context.deploy-preview]
+  command = "REACT_APP_STAGE=dev npm run build"
+
+# Branch Deploy context
+[context.branch-deploy]
+  command = "REACT_APP_STAGE=dev npm run build"
+
+# Redirect all routes to index.html for SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Proxy API requests to the serverless function
+# Proxy API requests to Netlify serverless functions
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
 
+# Dev server settings
 [dev]
   command = "npm run dev"
   port = 8888
   targetPort = 5000
-  publish = "dist/public"
+  publish = "build"
   autoLaunch = true
 
+# Serverless function bundler
 [functions]
   node_bundler = "esbuild"
