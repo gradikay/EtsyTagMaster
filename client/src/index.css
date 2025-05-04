@@ -221,4 +221,31 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
+  
+  /* Clickable tag styling */
+  .copy-tag-badge {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .copy-tag-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+    pointer-events: none;
+  }
+  
+  .copy-tag-badge:hover::before {
+    transform: translateX(0);
+  }
+  
+  .copy-tag-badge:active::before {
+    background: rgba(255, 255, 255, 0.2);
+  }
 }

@@ -251,8 +251,24 @@ export default function Home() {
                   <div className="flex flex-wrap gap-2">
                     {tags.map((tag, index) => (
                       <Badge 
-                        key={index} 
-                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation"
+                        key={index}
+                        onClick={() => {
+                          navigator.clipboard.writeText(tag)
+                            .then(() => {
+                              toast({
+                                title: "Tag copied!",
+                                description: `"${tag}" copied to clipboard`
+                              });
+                            })
+                            .catch(() => {
+                              toast({
+                                title: "Copy failed",
+                                description: "Could not copy tag to clipboard",
+                                variant: "destructive"
+                              });
+                            });
+                        }}
+                        className="bg-gradient-to-r from-primary/20 to-secondary/20 hover:from-primary/30 hover:to-secondary/30 text-white border border-slate-700 px-3 py-1.5 text-sm touch-manipulation cursor-pointer active:scale-95 transition-transform copy-tag-badge"
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {tag}

@@ -114,6 +114,8 @@ function generateTags(description: string, category?: string, style?: string): s
   // Deduplicate, filter by length, and get exactly 13 tags if possible (Etsy max)
   const uniqueTagsSet = new Set(allTags);
   const uniqueTags = Array.from(uniqueTagsSet)
+    // Remove any commas or slashes, and ensure appropriate length
+    .map(tag => tag.replace(/[,\/\\]/g, '').trim())
     .filter(tag => tag.length > 0 && tag.length <= 20) // Etsy tag length limit
     .slice(0, 13); // Etsy allows maximum 13 tags
   
