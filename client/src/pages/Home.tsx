@@ -113,13 +113,25 @@ export default function Home() {
       
       // Create a more descriptive success message
       const tagCount = data.tags.length;
-      const totalCount = data.totalAvailableTags || tagCount;
-      const extraTagsMessage = totalCount > tagCount ? ` (${totalCount - tagCount} more available)` : '';
-      const etsy13Message = tagCount > 13 ? ` - ${tagCount - 13} extra beyond Etsy's 13-tag limit!` : '';
+      const totalAvailableTags = data.totalAvailableTags || tagCount;
+      const totalFilteredTags = data.totalFilteredTags || tagCount;
+      
+      // Calculate messages for the toast
+      const extraTagsMessage = totalFilteredTags > tagCount 
+        ? ` (${totalFilteredTags - tagCount} more available with your settings)` 
+        : '';
+      
+      const wordLimitMessage = totalAvailableTags > totalFilteredTags 
+        ? ` (${totalAvailableTags - totalFilteredTags} filtered by word limit)` 
+        : '';
+        
+      const etsy13Message = tagCount > 13 
+        ? ` - ${tagCount - 13} extra beyond Etsy's 13-tag limit!` 
+        : '';
       
       toast({
         title: "Tags generated successfully!",
-        description: `Generated ${tagCount} tags${extraTagsMessage}${etsy13Message} with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
+        description: `Generated ${tagCount} tags${extraTagsMessage}${wordLimitMessage}${etsy13Message} with a relevance score of ${data.relevanceScore}/99`,
       });
     },
     onError: (error) => {
@@ -445,9 +457,14 @@ export default function Home() {
                     <p className="text-sm text-slate-400">
                       <span className="font-medium text-primary-foreground">Showing {tags.length} tags</span> from your description. Etsy allows a maximum of 13 tags per listing.
                     </p>
-                    {generateTagsMutation.data && generateTagsMutation.data.totalAvailableTags > tags.length && (
+                    {generateTagsMutation.data && generateTagsMutation.data.totalFilteredTags !== undefined && generateTagsMutation.data.totalFilteredTags > tags.length && (
                       <p className="text-xs text-amber-400 mt-1">
-                        <span className="font-medium">Info:</span> {generateTagsMutation.data.totalAvailableTags - tags.length} more tags available. Adjust the slider to see more options.
+                        <span className="font-medium">Info:</span> {generateTagsMutation.data.totalFilteredTags - tags.length} more tags available. Adjust the "Number of Tags" slider to see more.
+                      </p>
+                    )}
+                    {generateTagsMutation.data && generateTagsMutation.data.totalAvailableTags !== undefined && generateTagsMutation.data.totalFilteredTags !== undefined && generateTagsMutation.data.totalAvailableTags > generateTagsMutation.data.totalFilteredTags && (
+                      <p className="text-xs text-blue-400 mt-1">
+                        <span className="font-medium">Note:</span> {generateTagsMutation.data.totalAvailableTags - generateTagsMutation.data.totalFilteredTags} tags were filtered by your {form.getValues().maxWordsPerTag} word limit. Adjust the "Max Words Per Tag" slider to see more.
                       </p>
                     )}
                     {tags.length > 13 && (
