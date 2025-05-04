@@ -1,5 +1,4 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
-import { getApiUrl } from "./netlify";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -17,10 +16,7 @@ export async function apiRequest<T = any>({
   url: string;
   body?: unknown | undefined;
 }): Promise<T> {
-  // Get the correct API URL based on environment
-  const apiUrl = getApiUrl(url);
-  
-  const res = await fetch(apiUrl, {
+  const res = await fetch(url, {
     method,
     headers: body ? { "Content-Type": "application/json" } : {},
     body: body ? JSON.stringify(body) : undefined,
@@ -37,10 +33,7 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    // Get the correct API URL based on environment
-    const apiUrl = getApiUrl(queryKey[0] as string);
-    
-    const res = await fetch(apiUrl, {
+    const res = await fetch(queryKey[0] as string, {
       credentials: "include",
     });
 
