@@ -94,14 +94,21 @@ export default function Home() {
       setRelevanceScore(data.relevanceScore);
       
       // Update URL with the generated tags for sharing
+      // NOTE: No limitation on the number of tags
       const tagsParam = encodeURIComponent(JSON.stringify(data.tags));
       const scoreParam = data.relevanceScore.toString();
       const newUrl = `?tags=${tagsParam}&score=${scoreParam}`;
       window.history.pushState(null, '', newUrl);
       
+      console.log(`Generated ${data.tags.length} tags`); // Log the actual count of tags
+      
+      // Create a more descriptive success message
+      const tagCount = data.tags.length;
+      const etsy13Message = tagCount > 13 ? ` (${tagCount - 13} extra options beyond Etsy's 13-tag limit!)` : '';
+      
       toast({
         title: "Tags generated successfully!",
-        description: `Generated ${data.tags.length} tags with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
+        description: `Generated ${tagCount} potential tags${etsy13Message} with a relevance score of ${data.relevanceScore.toFixed(1)}/10`,
       });
     },
     onError: (error) => {
@@ -248,7 +255,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 max-h-[350px] overflow-y-auto p-1 tag-container">
                     {tags.map((tag, index) => (
                       <Badge 
                         key={index}
