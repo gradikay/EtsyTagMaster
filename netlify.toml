@@ -1,19 +1,19 @@
 [build]
-  command = "REACT_APP_STAGE=dev npm run build"
-  publish = "build"
+  command = "npm run build"
+  publish = "dist/public"
   functions = "netlify/functions"
 
 # Production context
 [context.production]
-  command = "REACT_APP_STAGE=prod npm run build"
+  command = "npm run build"
 
 # Deploy Preview context
 [context.deploy-preview]
-  command = "REACT_APP_STAGE=dev npm run build"
+  command = "npm run build"
 
 # Branch Deploy context
 [context.branch-deploy]
-  command = "REACT_APP_STAGE=dev npm run build"
+  command = "npm run build"
 
 # Redirect all routes to index.html for SPA
 [[redirects]]
@@ -32,7 +32,7 @@
   command = "npm run dev"
   port = 8888
   targetPort = 5000
-  publish = "build"
+  publish = "dist/public"
   autoLaunch = true
 
 # Serverless function bundler
