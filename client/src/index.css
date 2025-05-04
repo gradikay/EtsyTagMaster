@@ -686,7 +686,7 @@ body.light-mode * [role="listbox"],
 body.light-mode * [role="option"],
 body.light-mode * [data-radix-select-viewport],
 body.light-mode * [data-radix-select-content],
-body.light-mode * [data-radix-popper-content-wrapper] * {
+body.light-mode * [data-radix-popper-content-wrapper] *:not(.mode-toggle-bg) {
   background-color: white !important;
   color: #1e293b !important;
 }
